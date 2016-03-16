@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -114,20 +115,24 @@ public class SplashActivity extends Activity {
 							json.append(line);
 							line = bfr.readLine();
 						}
-						//解析json数据
-						parseJson = parseJson(json);
+						//解析json数据，处理JSON异常
+						parseJson = parseJson(json);//返回数据的封装信息
 						isNewVersion(parseJson);// 是否有新版本
 						System.out.println(parseJson.getVersionCode()+"版本号");
 
 						bfr.close();
 						conn.disconnect();
-						parseJson(json);
 					}
-				} catch (MalformedURLException e) {
+				} catch (MalformedURLException e) {//异常提示4002
 					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					System.out.println("4002 URL格式错误" );
+				} catch (IOException e) {//异常提示4001
 					e.printStackTrace();
+					System.out.println("4001 网络连接错误" );
+				} catch (JSONException e) {
+					// 4003
+					e.printStackTrace();
+					System.out.println("4003 JSON格式错误" );
 				}
 
 			}
@@ -158,6 +163,7 @@ public class SplashActivity extends Activity {
 	private void loadMain() {
 		Intent intent = new Intent(SplashActivity.this,HomeActivity.class);
 		startActivity(intent);//进入主界面
+		finish();//关闭自己
 	};
 	/**
 	 * 在子线程中执行，不可做ui操作，故由handler传输数据
@@ -190,7 +196,17 @@ public class SplashActivity extends Activity {
 	protected void showUpdateDialog() {
 		//对话框的上下文 是Activity的class,AlertDialog是Activity的一部分
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle("提醒")
+		//让用户禁用取消操作(防止用户取消退出更新对话框出现bug)处理方法1
+		//builder.setCancelable(false);
+		//处理方法2 设置用户取消事件
+		builder.setOnCancelListener(new OnCancelListener(){
+		
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				// 有对话框时，用户取消，事件处理——》 进入主界面
+				loadMain();
+			}
+		})     .setTitle("提醒")
 		       .setMessage("是否更新新版本？新版本的具有如下特性：" + parseJson.getDesc())
 		       .setPositiveButton("更新", new OnClickListener() {
 				
@@ -255,19 +271,25 @@ public class SplashActivity extends Activity {
 		String type = "application/vnd.android.package-archive";
 		Uri data = Uri.fromFile(new File("/mnt/sdcard/xx.apk"));
 		intent.setDataAndType(data , type);
-		startActivity(intent);
+		startActivityForResult(intent,0);
 
 	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		//如果用户取消更新apk，那么直接进入主界面
+		loadMain();
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 
 	/**
 	 * @param jsonString
-	 *            url的json数据
+	 *            url的json数据,throws JSONException 则谁调用该方法 谁处理异常
 	 * @return url信息封装对象
 	 */
-	protected UrlBean parseJson(StringBuilder jsonString) {
+	protected UrlBean parseJson(StringBuilder jsonString) throws JSONException{
 		UrlBean bean = new UrlBean();
 		JSONObject jsonObj;
-		try {
 			// {"version":"2","url":"http://10.0.2.2:8080/xxx.apk","desc":"增加了防病毒功能"}
 			jsonObj = new JSONObject(jsonString + "");
 			int versionCode = jsonObj.getInt("version");
@@ -277,9 +299,6 @@ public class SplashActivity extends Activity {
 			bean.setDesc(desc);
 			bean.setUrl(url);
 			bean.setVersionCode(versionCode);
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
 
 		return bean;
 	}
