@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -44,8 +45,8 @@ public class SplashActivity extends Activity {
 	private static final int LOADMAIN = 1;//加载主界面
 	private static final int SHOWUPDATEDIALOG = 2;//显示是否更新的对话框
 	private RelativeLayout rl_root;// 界面的根布局组件
-	private int versionCode;// 版本�?
-	private String versionName;// 版本�?
+	private int versionCode;// 版本号
+	private String versionName;// 版本名
 	private TextView tv_versionName;// 显示版本名的组件
 	private UrlBean parseJson;//url信息封装bean
 	private long startTimeMillis;//记录开始访问网络的时间
@@ -91,7 +92,8 @@ public class SplashActivity extends Activity {
 					URL url = new URL("http://10.0.2.2:8080/guardversion.json");
 					HttpURLConnection conn = (HttpURLConnection) url
 							.openConnection();
-					// 读取数据的超�? conn.setReadTimeout(5000);
+					// 读取数据的超时
+					conn.setReadTimeout(5000);
 					// 网络连接超时
 					conn.setConnectTimeout(5000);
 					// 设置请求方式
@@ -104,7 +106,7 @@ public class SplashActivity extends Activity {
 						// 把字节流转换成字符流
 						BufferedReader bfr = new BufferedReader(
 								new InputStreamReader(is));
-						// 读取�?��信息
+						// 读取一行信息
 						String line = bfr.readLine();
 						// json字符串数据的封装
 						StringBuilder json = new StringBuilder();
@@ -211,33 +213,50 @@ public class SplashActivity extends Activity {
 			});
 		builder.show();//显示对话框
 	}
-
 	/**
-	 * 新版本的下载安装
+	 * 新版本的下载安装 利用xutil工具类
 	 */
 	protected void downLoadNewApk() {
-		HttpUtils utils = new HttpUtils();
+		HttpUtils utils = new HttpUtils();//，httputils封装了子线程，获取了回调结果，故不需要再设置线程再设置handler处理消息
 		//parseJson.getUrl() 下载的url
-		// target  本地路径
+		// target  apk下载到的位置（本地路径）第三个参数 回调结果
 		System.out.println(parseJson.getUrl());
 		utils.download(parseJson.getUrl(), "/mnt/sdcard/xx.apk", new RequestCallBack<File>() {
 			
 			@Override
 			public void onSuccess(ResponseInfo<File> arg0) {
-				// TODO Auto-generated method stub
 				//下载成功
 				//在主线程中执行
 				Toast.makeText(getApplicationContext(), "下载新版本成功", 1).show();
 				//安装apk
+				installApk();//安装apk
 			}
 			
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
-				// TODO Auto-generated method stub
 				//下载失败
 				Toast.makeText(getApplicationContext(), "下载新版本失败", 1).show();
 			}
 		});
+	}
+/*
+ * 安装的新版本
+ * */
+	protected void installApk() {
+		/*<intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <data android:scheme="content" />
+        <data android:scheme="file" />
+        <data android:mimeType="application/vnd.android.package-archive" />
+    </intent-filter>*/
+		Intent intent = new Intent("android.intent.action.VIEW");
+		intent.addCategory("android.intent.category.DEFAULT");
+		String type = "application/vnd.android.package-archive";
+		Uri data = Uri.fromFile(new File("/mnt/sdcard/xx.apk"));
+		intent.setDataAndType(data , type);
+		startActivity(intent);
+
 	}
 
 	/**
@@ -317,10 +336,12 @@ public class SplashActivity extends Activity {
 	private void showAlpha() {
 		// Alpha动画0.0完全透明
 		AlphaAnimation aa = new AlphaAnimation(0.0f, 1.0f);
-		// 设置动画播放的时�?毫秒为单�?
+		// 设置动画播放的时间3000毫秒
 		aa.setDuration(3000);
-		// 界面停留在动画结束状�? aa.setFillAfter(true);
-		// 给组件设置动�? rl_root.startAnimation(aa);
+		// 界面停留在动画结束状态
+		aa.setFillAfter(true);
+		// 给组件设置动画
+		rl_root.startAnimation(aa);
 	}
 
 	@Override
