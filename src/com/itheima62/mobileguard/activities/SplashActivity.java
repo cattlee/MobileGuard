@@ -25,11 +25,13 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
 import android.view.Menu;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.RotateAnimation;
 import android.view.animation.ScaleAnimation;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +54,7 @@ public class SplashActivity extends Activity {
 	private TextView tv_versionName;// 显示版本名的组件
 	private UrlBean parseJson;//url信息封装bean
 	private long startTimeMillis;//记录开始访问网络的时间
+	private ProgressBar pb_download;//下载最新版本apk的进度条
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -139,14 +142,16 @@ public class SplashActivity extends Activity {
 					e.printStackTrace();
 					errorCode=4003;
 				}finally{
-//					if(errorCode==-1){
-//						isNewVersion(parseJson);
-//					}else{
-//						Message msg =Message.obtain();
-//						msg.what=ERROR;
-//						msg.arg1=errorCode;
-//						handler.sendMessage(msg);//发送错误提示信息
-//					}
+/*					
+*				 if(errorCode==-1){
+*						isNewVersion(parseJson);
+*					}else{
+*						Message msg =Message.obtain();
+*						msg.what=ERROR;
+*						msg.arg1=errorCode;
+*						handler.sendMessage(msg);//发送错误提示信息
+*					}
+*/
 					Message msg=Message.obtain();
 					if(errorCode==-1){
 						msg.what=isNewVersion(parseJson);//檢測是否有新版本
@@ -214,6 +219,7 @@ public class SplashActivity extends Activity {
 		}
 
 	};
+	
 
 	private void loadMain() {
 		Intent intent = new Intent(SplashActivity.this,HomeActivity.class);
@@ -289,6 +295,15 @@ public class SplashActivity extends Activity {
 		System.out.println(parseJson.getUrl());
 		utils.download(parseJson.getUrl(), "/mnt/sdcard/xx.apk", new RequestCallBack<File>() {
 			
+			@Override//total 总进度  current 当前进度
+			public void onLoading(long total, long current, boolean isUploading) {
+				// TODO Auto-generated method stub
+				pb_download.setVisibility(View.VISIBLE);//设置进度条显示
+				pb_download.setMax((int) total);//设置进度条的最大值
+				pb_download.setProgress((int) current);//设置当前进度				
+				super.onLoading(total, current, isUploading);
+			}
+
 			@Override
 			public void onSuccess(ResponseInfo<File> arg0) {
 				//下载成功
@@ -296,6 +311,7 @@ public class SplashActivity extends Activity {
 				Toast.makeText(getApplicationContext(), "下载新版本成功", 1).show();
 				//安装apk
 				installApk();//安装apk
+				pb_download.setVisibility(View.GONE);//隐藏进度条
 			}
 			
 			@Override
@@ -360,6 +376,7 @@ public class SplashActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		rl_root = (RelativeLayout) findViewById(R.id.rl_splash_root);
 		tv_versionName = (TextView) findViewById(R.id.tv_splash_version_name);
+		pb_download = (ProgressBar) findViewById(R.id.pb_splash_download_progress);
 	}
 
 	/**
