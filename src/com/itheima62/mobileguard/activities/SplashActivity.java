@@ -45,6 +45,7 @@ public class SplashActivity extends Activity {
 
 	private static final int LOADMAIN = 1;//加载主界面
 	private static final int SHOWUPDATEDIALOG = 2;//显示是否更新的对话框
+	protected static final int ERROR = 3;//错误的统一代号
 	private RelativeLayout rl_root;// 界面的根布局组件
 	private int versionCode;// 版本号
 	private String versionName;// 版本名
@@ -88,10 +89,13 @@ public class SplashActivity extends Activity {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				BufferedReader bfr =null;
+				HttpURLConnection conn=null;
+				int errorCode=-1;//错误代码默认为-1   即正常
 				try {
 					startTimeMillis = System.currentTimeMillis();//毫秒显示当前时间
 					URL url = new URL("http://10.0.2.2:8080/guardversion.json");
-					HttpURLConnection conn = (HttpURLConnection) url
+					conn = (HttpURLConnection) url
 							.openConnection();
 					// 读取数据的超时
 					conn.setReadTimeout(5000);
@@ -101,11 +105,13 @@ public class SplashActivity extends Activity {
 					conn.setRequestMethod("GET");
 					// 获取相应结果
 					int code = conn.getResponseCode();
+					//返回请求码
+					System.out.println("code");
 					if (code == 200) {// 数据获取成功
 						// 获取读取的字节流
 						InputStream is = conn.getInputStream();
 						// 把字节流转换成字符流
-						BufferedReader bfr = new BufferedReader(
+						bfr = new BufferedReader(
 								new InputStreamReader(is));
 						// 读取一行信息
 						String line = bfr.readLine();
@@ -117,28 +123,57 @@ public class SplashActivity extends Activity {
 						}
 						//解析json数据，处理JSON异常
 						parseJson = parseJson(json);//返回数据的封装信息
-						isNewVersion(parseJson);// 是否有新版本
-						System.out.println(parseJson.getVersionCode()+"版本号");
-
+						
+						
+					}else{
+						errorCode=404;
+					}
+				} catch (MalformedURLException e) {//异常提示4002json文件位置错误（没找到JSON文件）
+					e.printStackTrace();
+					errorCode=4002;
+				} catch (IOException e) {//异常提示4001网络连接错误
+					e.printStackTrace();
+					errorCode=4001;
+				} catch (JSONException e) {
+					// 4003  JSON格式异常
+					e.printStackTrace();
+					errorCode=4003;
+				}finally{
+//					if(errorCode==-1){
+//						isNewVersion(parseJson);
+//					}else{
+//						Message msg =Message.obtain();
+//						msg.what=ERROR;
+//						msg.arg1=errorCode;
+//						handler.sendMessage(msg);//发送错误提示信息
+//					}
+					Message msg=Message.obtain();
+					if(errorCode==-1){
+						msg.what=isNewVersion(parseJson);//檢測是否有新版本
+					}else{
+						msg.what=ERROR;
+      					msg.arg1=errorCode;	
+					}
+					long endTime = System.currentTimeMillis();
+					if (endTime - startTimeMillis < 3000){
+						SystemClock.sleep(3000 - (endTime - startTimeMillis));//不超过3秒，补足3秒
+					}
+					handler.sendMessage(msg);//发送消息
+					try {
+						//断开连接 释放资源
+						if(bfr==null||conn==null){
+							return;
+						}
 						bfr.close();
 						conn.disconnect();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-				} catch (MalformedURLException e) {//异常提示4002
-					e.printStackTrace();
-					System.out.println("4002 URL格式错误" );
-				} catch (IOException e) {//异常提示4001
-					e.printStackTrace();
-					System.out.println("4001 网络连接错误" );
-				} catch (JSONException e) {
-					// 4003
-					e.printStackTrace();
-					System.out.println("4003 JSON格式错误" );
 				}
-
 			}
 		}).start();
 	}
-	
 	
 	/*
 	 * Handler主要接受子线程发送的数据， 并用此数据配合主线程更新UI。
@@ -150,9 +185,29 @@ public class SplashActivity extends Activity {
 			case LOADMAIN://加载主界面
 				loadMain();
 				break;
+			case ERROR://有异常
+				switch(msg.arg1){
+				case 404://资源找不到
+					Toast.makeText(getApplicationContext(), "404资源找不到", 0).show();
+					break;
+				case 4001://找不到网络
+					Toast.makeText(getApplicationContext(), "4001找不到网络", 0).show();
+					break;
+				case 4002://URL格式错误
+					Toast.makeText(getApplicationContext(), "4002URl格式错误", 0).show();
+					break;
+				case 4003://JSON格式错误
+					Toast.makeText(getApplicationContext(), "4003JSON格式错误", 0).show();
+				break;
+				default:
+					break;
+				}
+				loadMain();//进入主界面
+				break;
 			case SHOWUPDATEDIALOG://显示更新版本的对话框
 				showUpdateDialog();
 				break;
+			
 			default:
 				break;
 			}
@@ -169,24 +224,19 @@ public class SplashActivity extends Activity {
 	 * 在子线程中执行，不可做ui操作，故由handler传输数据
 	 * @param parseJson
 	 */
-	protected void isNewVersion(UrlBean parseJson) {
+	protected int isNewVersion(UrlBean parseJson) {
 		int serverCode = parseJson.getVersionCode();// 获取服务器的版本
-		long endTimeMillis = System.currentTimeMillis();//isNewVersion（）执行结束的时间
-		if (endTimeMillis - startTimeMillis < 3000) {
-			//设置休眠的时间，保证至少休眠3秒
-			SystemClock.sleep(3000 - (endTimeMillis - startTimeMillis));
-		}
+
 		if (serverCode == versionCode){//版本一致
 			
-			//进入主界面
-			Message msg = Message.obtain();//获取msg  或者通过new 获取
-			msg.what = LOADMAIN;
-			handler.sendMessage(msg);
+//			//进入主界面
+//			Message msg = Message.obtain();//获取msg  或者通过new 获取
+//			msg.what = LOADMAIN;
+//			handler.sendMessage(msg);
+			return LOADMAIN;
 		} else {//有新版本  
-			//弹出对话框，显示新版本的描述信息，让用户点击是否更新
-			Message msg = Message.obtain();
-			msg.what = SHOWUPDATEDIALOG;
-			handler.sendMessage(msg);
+
+			return SHOWUPDATEDIALOG;
 		}
 	}
 	
