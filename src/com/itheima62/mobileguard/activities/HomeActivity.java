@@ -19,7 +19,7 @@ import android.widget.TextView;
  */
 public class HomeActivity extends Activity {
 	private GridView gv_menus;//主界面的按钮
-	private int icons[] = {R.drawable.safe,R.drawable.callmsgsafe,R.drawable.app
+	private int icons[] = {R.drawable.safe,R.drawable.callmsgsafe,R.drawable.item_gv_selector_app
 			,R.drawable.taskmanager,R.drawable.netmanager,R.drawable.trojan
 			,R.drawable.sysoptimize,R.drawable.atools,R.drawable.settings};
 	
