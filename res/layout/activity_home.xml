@@ -4,7 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
     <TextView android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="65dip"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:background="#5500ff00"
         android:text="主界面"/>
-
+    <com.itheima62.mobileguard.view.MyTextView
+        android:focusable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:ellipsize="marquee"/>
+        android:text="你是我的小卫士，怎么爱你也不嫌多，你的强大功能，太厉害！"
+        
+     <GridView 
+        android:id="@+id/gv_home_menus"
+	    android:numColumns="3"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	   ></GridView>
+    
 </LinearLayout>
