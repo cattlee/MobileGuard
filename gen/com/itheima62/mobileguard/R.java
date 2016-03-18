@@ -29,34 +29,47 @@ public final class R {
         public static final int app=0x7f020000;
         public static final int app_pressed=0x7f020001;
         public static final int atools=0x7f020002;
-        public static final int btn_green_normal=0x7f020003;
-        public static final int btn_green_pressed=0x7f020004;
-        public static final int callmsgsafe=0x7f020005;
-        public static final int gv_list_selector=0x7f020006;
-        public static final int ic_launcher=0x7f020007;
-        public static final int item_gv_selector_app=0x7f020008;
-        public static final int luncher_bg=0x7f020009;
-        public static final int netmanager=0x7f02000a;
-        public static final int safe=0x7f02000b;
-        public static final int settings=0x7f02000c;
-        public static final int sysoptimize=0x7f02000d;
-        public static final int taskmanager=0x7f02000e;
-        public static final int trojan=0x7f02000f;
+        public static final int bt_selector=0x7f020003;
+        public static final int btn_green_normal=0x7f020004;
+        public static final int btn_green_pressed=0x7f020005;
+        public static final int callmsgsafe=0x7f020006;
+        public static final int gv_list_selector=0x7f020007;
+        public static final int ic_launcher=0x7f020008;
+        public static final int item_gv_selector_app=0x7f020009;
+        public static final int lock=0x7f02000a;
+        public static final int luncher_bg=0x7f02000b;
+        public static final int netmanager=0x7f02000c;
+        public static final int safe=0x7f02000d;
+        public static final int settings=0x7f02000e;
+        public static final int sysoptimize=0x7f02000f;
+        public static final int taskmanager=0x7f020010;
+        public static final int trojan=0x7f020011;
+        public static final int unlock=0x7f020012;
     }
     public static final class id {
-        public static final int action_settings=0x7f090006;
+        public static final int action_settings=0x7f09000d;
+        public static final int bt_dialog_enter_password_cancel=0x7f090006;
+        public static final int bt_dialog_enter_password_login=0x7f090005;
+        public static final int bt_dialog_setting_password_cancel=0x7f09000a;
+        public static final int bt_dialog_setting_password_setpass=0x7f090009;
+        public static final int et_dialog_enter_password_passone=0x7f090004;
+        public static final int et_dialog_setting_password_passone=0x7f090007;
+        public static final int et_dialog_setting_password_passtwo=0x7f090008;
         public static final int gv_home_menus=0x7f090000;
-        public static final int iv_item_home_gv_icon=0x7f090004;
+        public static final int iv_item_home_gv_icon=0x7f09000b;
         public static final int pb_splash_download_progress=0x7f090003;
         public static final int rl_splash_root=0x7f090001;
-        public static final int tv_item_home_gv_name=0x7f090005;
+        public static final int tv_item_home_gv_name=0x7f09000c;
         public static final int tv_splash_version_name=0x7f090002;
     }
     public static final class layout {
         public static final int activity_home=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int activity_splash=0x7f030002;
-        public static final int item_home_gridview=0x7f030003;
+        public static final int activity_lostfind=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int activity_splash=0x7f030003;
+        public static final int dialog_enter_password=0x7f030004;
+        public static final int dialog_setting_password=0x7f030005;
+        public static final int item_home_gridview=0x7f030006;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -92,5 +105,6 @@ public final class R {
         /**  Application theme. 
          */
         public static final int AppTheme=0x7f070001;
+        public static final int tv_title=0x7f070002;
     }
 }

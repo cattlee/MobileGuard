@@ -18,5 +18,12 @@
         <item name="android:windowFullscreen">true</item>  
         <item name="android:windowNoTitle">true</item>
         </style>
+    <style name="tv_title">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">65dip</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">#5500ff00</item>
+        </style>
 
 </resources>

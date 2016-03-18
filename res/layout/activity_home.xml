@@ -3,11 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <TextView android:layout_width="fill_parent"
-        android:layout_height="65dip"
-        android:textSize="28sp"
-        android:gravity="center"
-        android:background="#5500ff00"
+    <TextView 
+        style="@style/tv_title"
         android:text="主界面"/>
     
     <com.itheima62.mobileguard.view.MyTextView
