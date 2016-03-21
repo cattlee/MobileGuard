@@ -29,11 +29,12 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.itheima62.mobileguard.activities.LostFindActivity">
-        </activity>
-        
-        <activity android:name="com.itheima62.mobileguard.activities.HomeActivity">
-        </activity>
+        <activity android:name="com.itheima62.mobileguard.activities.LostFindActivity"></activity>
+        <activity android:name="com.itheima62.mobileguard.activities.HomeActivity"></activity>
+        <activity android:name="com.itheima62.mobileguard.activities.Setup1Activity"></activity>
+        <activity android:name="com.itheima62.mobileguard.activities.Setup2Activity"></activity>
+        <activity android:name="com.itheima62.mobileguard.activities.Setup3Activity"></activity>
+        <activity android:name="com.itheima62.mobileguard.activities.Setup4Activity"></activity>
     </application>
 
 </manifest>
