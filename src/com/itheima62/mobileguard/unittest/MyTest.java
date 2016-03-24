@@ -11,7 +11,7 @@ public class MyTest extends AndroidTestCase {
 		}
 	
 	public void testRunningService(){
-		ServiceUtils.isServiceRuning(getContext(), "");
+		ServiceUtils.isServiceRunning(getContext(), "");
 	}
 }
 

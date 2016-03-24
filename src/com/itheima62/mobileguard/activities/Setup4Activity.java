@@ -18,7 +18,6 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
  * 第一个设置向导界面
  */
 public class Setup4Activity extends BaseSetupActivity {
-	//复选框
 	private CheckBox cb_isprotected;
 
 	/**
@@ -40,7 +39,7 @@ public class Setup4Activity extends BaseSetupActivity {
 	public void initData() {
 		//初始化复选框的值 看服务是否开启
 		//如果服务开启，打钩，否则不打钩
-		if (ServiceUtils.isServiceRuning(getApplicationContext(), "com.itheima62.mobileguard.service.LostFindService")){
+		if (ServiceUtils.isServiceRunning(getApplicationContext(), "com.itheima62.mobileguard.service.LostFindService")){
 			// 服务在运行
 			cb_isprotected.setChecked(true);
 		} else {

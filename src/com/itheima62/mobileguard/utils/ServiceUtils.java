@@ -16,7 +16,7 @@ public class ServiceUtils {
  * 该service  是否运行
  * */
 	
-	public static Boolean isServiceRuning(Context context,String serviceName){
+	public static Boolean isServiceRunning(Context context,String serviceName){
 		boolean isRunning=false;
 		
 		//判断运行中的服务状态，需要ActivityManader
