@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:text="sim卡如果发送变化:\n报警短信就会给安全号码" />
 
+    <!--android:inputType设置格式过滤 -->
     <EditText
         android:inputType="phone"
         android:id="@+id/et_setup3_safenumber"

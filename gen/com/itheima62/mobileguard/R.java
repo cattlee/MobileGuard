@@ -56,7 +56,7 @@ public final class R {
         public static final int unlock=0x7f020015;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0011;
+        public static final int action_settings=0x7f0a0013;
         public static final int bt_dialog_enter_password_cancel=0x7f0a000a;
         public static final int bt_dialog_enter_password_login=0x7f0a0009;
         public static final int bt_dialog_setting_password_cancel=0x7f0a000e;
@@ -68,11 +68,13 @@ public final class R {
         public static final int et_dialog_setting_password_passtwo=0x7f0a000c;
         public static final int et_setup3_safenumber=0x7f0a0006;
         public static final int gv_home_menus=0x7f0a0000;
-        public static final int iv_item_home_gv_icon=0x7f0a000f;
+        public static final int iv_item_home_gv_icon=0x7f0a0011;
         public static final int iv_setup2_isbind=0x7f0a0005;
         public static final int pb_splash_download_progress=0x7f0a0003;
         public static final int rl_splash_root=0x7f0a0001;
-        public static final int tv_item_home_gv_name=0x7f0a0010;
+        public static final int tv_friends_item_name=0x7f0a000f;
+        public static final int tv_friends_item_phone=0x7f0a0010;
+        public static final int tv_item_home_gv_name=0x7f0a0012;
         public static final int tv_splash_version_name=0x7f0a0002;
     }
     public static final class layout {
@@ -86,7 +88,8 @@ public final class R {
         public static final int activity_splash=0x7f030007;
         public static final int dialog_enter_password=0x7f030008;
         public static final int dialog_setting_password=0x7f030009;
-        public static final int item_home_gridview=0x7f03000a;
+        public static final int item_friend_listview=0x7f03000a;
+        public static final int item_home_gridview=0x7f03000b;
     }
     public static final class menu {
         public static final int main=0x7f090000;

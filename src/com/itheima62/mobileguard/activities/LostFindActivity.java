@@ -24,7 +24,7 @@ public class LostFindActivity extends Activity {
 			//要进入设置向导界面
 			Intent intent = new Intent(this,Setup1Activity.class);
 			startActivity(intent);
-			finish();//关闭自己
+			finish();//关闭自己  如果操作取消 则直接进入主界面
 		}
 	}
 

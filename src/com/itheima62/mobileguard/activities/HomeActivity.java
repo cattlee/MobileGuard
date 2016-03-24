@@ -174,6 +174,7 @@ public class HomeActivity extends Activity {
 					 System.out.println("保存密码");
 					 //对密码加密  MD5加密两次   保存MD5加密后的密码passone  银行MD5加密十次以上 所以很难破解
 					 passone=Md5Utils.md5(Md5Utils.md5(passone));
+					 //保存密码到sp
 					 SpTools.putString(getApplicationContext(), MyConstants.PASSWORD, passone);
 					 dialog.dismiss();
 				}

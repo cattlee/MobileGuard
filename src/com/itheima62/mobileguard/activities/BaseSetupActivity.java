@@ -11,7 +11,7 @@ import android.view.View;
 import com.itheima62.mobileguard.R;
 
 public abstract class BaseSetupActivity extends Activity {
-	private GestureDetector gd;
+	private GestureDetector gd;//手势识别器
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,6 @@ public abstract class BaseSetupActivity extends Activity {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub
 		gd.onTouchEvent(event);//绑定onTouch事件
 		return super.onTouchEvent(event);
 	}
@@ -54,13 +53,12 @@ public abstract class BaseSetupActivity extends Activity {
 			@Override
 			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
 					float velocityY) {
-				// TODO Auto-generated method stub
 				//x轴方向的速度是否满足横向滑动的条件 pix/s
 				if (velocityX > 200) { //速度大于400像素每秒
 					//可以完成滑动
 					float dx = e2.getX() - e1.getX();//x轴方向滑动的间距
 					if (Math.abs(dx) < 100) {
-						return true;//如果间距不符合直接无效
+						return true;//如果间距不符合  直接无效
 					}
 					if (dx < 0 ){//从右往左滑动
 						next(null);//不是组件的事件调用
@@ -139,7 +137,7 @@ public abstract class BaseSetupActivity extends Activity {
 	public void startActivity(Class type) {
 		Intent next = new Intent(this, type);
 		startActivity(next);
-		finish();//关闭自己
+		finish();//关闭自己，一次取消则退出设置界面   进入  主界面
 	}
 
 	public abstract void nextActivity();

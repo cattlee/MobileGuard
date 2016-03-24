@@ -45,8 +45,9 @@ public class Setup3Activity extends BaseSetupActivity {
 	public void selectSafeNumber(View v){
 		//弹出新的Activity来显示所有好友信息
 		Intent friends = new Intent(this,FriendsActivity.class);
+		//一次性完成  跳转到目标页面 完成目标界面任务后，自动跳转到当前页面
 		startActivityForResult(friends,1);//启动显示好友界面
-		//
+		//获取好友数据关闭界面 回到获取联系人界面
 	}
 	
 	@Override
@@ -67,7 +68,6 @@ public class Setup3Activity extends BaseSetupActivity {
 	 */
 	@Override
 	public void next(View v) {
-		// TODO Auto-generated method stub
 		//保存安全号码
 		
 		//获取安全号码
