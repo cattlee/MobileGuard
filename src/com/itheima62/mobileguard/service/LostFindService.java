@@ -30,7 +30,6 @@ public class LostFindService extends Service {
 			//
 			
 			Bundle extras = intent.getExtras();
-		    // int i = 3 
 			
 			Object datas[] = (Object[]) extras.get("pdus");
 			for (Object data:datas){

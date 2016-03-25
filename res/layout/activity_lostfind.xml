@@ -28,9 +28,12 @@
     </RelativeLayout>
 
     <TextView
+        android:clickable="true"
+        android:onClick="enterSetup"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
+        android:layout_marginBottom="10dip"
         android:text="是否重新进入设置向导界面"
         android:textSize="18sp" />
 

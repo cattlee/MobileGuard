@@ -7,6 +7,7 @@ import com.itheima62.mobileguard.utils.SpTools;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 public class LostFindActivity extends Activity {
 
@@ -27,7 +28,17 @@ public class LostFindActivity extends Activity {
 			finish();//关闭自己  如果操作取消 则直接进入主界面
 		}
 	}
-
+	
+	
+/*
+ * 重新进入设置向导界面
+ * */
+	public void enterSetup(View view){
+		Intent setup1=new Intent(this,Setup1Activity.class);
+		startActivity(setup1);
+		finish();
+	}
+	
 	private void initView() {
 		setContentView(R.layout.activity_lostfind);
 		
