@@ -1,6 +1,7 @@
 package com.itheima62.mobileguard.service;
 
 import android.app.Service;
+import android.app.admin.DevicePolicyManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -41,8 +42,16 @@ public class LostFindService extends Service {
 					Intent service = new Intent(context,LocationService.class);
 					startService(service);//启动定位的服务
 					System.out.println("gps intent ok");
-					abortBroadcast();//终止网络
-					
+					abortBroadcast();//终止广播
+					}
+				else if(mess.equals("#*lockscreen*#")){
+					//获得设备管理器
+					DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE);
+					//加密设置密码
+					dpm.resetPassword("123", 0);
+					//一键锁屏
+					dpm.lockNow();
+					abortBroadcast();//终止广播
 				}
 				}
 		}

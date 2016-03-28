@@ -1,10 +1,13 @@
 package com.itheima62.mobileguard.service;
 
+import java.util.List;
+
 import com.itheima62.mobileguard.utils.MyConstants;
 import com.itheima62.mobileguard.utils.SpTools;
 
 import android.app.Service;
 import android.content.Intent;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -78,13 +81,23 @@ public class LocationService extends Service {
 
 			}
 		};
-		/*   lm.requestLocationUpdates(provider, minTime, minDistance, listener)  注册监听回调 完成定位信息的更新
-		*provider 定位方式
+		//获取所有定位方式,后利用最佳的定位方式进行定位   模拟器仅支持  gps 和 被动（3g、4g）
+		List<String> allProviders = lm.getAllProviders();
+		for (String string : allProviders) {
+			System.out.println(string+"》》定位方式");
+		}
+		Criteria criteria=new Criteria();
+		criteria.setCostAllowed(true);//产生费用
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);//经度
+		//动态获取手机的最佳定位方式  Criteria查询
+		String bestProvider = lm.getBestProvider(criteria, true);
+		/*lm.requestLocationUpdates(provider, minTime, minDistance, listener)  注册监听回调 完成定位信息的更新
+		*provider 定位方式   gps  wifi  基站
 		*minTime 定位时间差
 		*minDistance 定位距离差
 		*listener 定位的监听回调
 		*/
-		lm.requestLocationUpdates("gps", 0, 0, listener);
+		lm.requestLocationUpdates(bestProvider, 0, 0, listener);
 		super.onCreate();
 	}
 	@Override
