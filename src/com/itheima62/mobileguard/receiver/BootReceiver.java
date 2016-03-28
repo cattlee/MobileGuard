@@ -30,7 +30,7 @@ public class BootReceiver extends BroadcastReceiver {
 		
 		//判断sim卡是否发生变化
 		//为了测试 故意更改sim卡 序列号
-		if(!oldSim.equals(simSerialNumber+"1")){
+		if(!oldSim.equals(simSerialNumber+"2")){
 			//sim卡发生变化 发送报警短信
 			//取出安全号码,号码肯定有
 			String safeNumber=SpTools.getString(context, MyConstants.SAFENUMBER,"");

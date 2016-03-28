@@ -11,6 +11,12 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 实现gps 定位的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    
+    
    <instrumentation
         android:name="android.test.InstrumentationTestRunner"
         android:targetPackage="com.itheima62.mobileguard" />
@@ -45,8 +51,8 @@
         <activity android:name="com.itheima62.mobileguard.activities.LostFindActivity"></activity>
         <activity android:name="com.itheima62.mobileguard.activities.HomeActivity"></activity>
    
+        <service android:name="com.itheima62.mobileguard.service.LocationService"></service>
         <service android:name="com.itheima62.mobileguard.service.LostFindService"></service>
-        
         <receiver android:name="com.itheima62.mobileguard.receiver.BootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"></action>
