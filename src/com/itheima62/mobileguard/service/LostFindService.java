@@ -53,6 +53,15 @@ public class LostFindService extends Service {
 					dpm.lockNow();
 					abortBroadcast();//终止广播
 				}
+				else if(mess.equals("#*wipedata*#")){
+					//远程清除数据
+					//获取设备管理器
+					DevicePolicyManager dpm=(DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE);
+					//清除sd卡数据
+					dpm.wipeData(0);
+					abortBroadcast();//终止广播
+					
+				}
 				}
 		}
 		
