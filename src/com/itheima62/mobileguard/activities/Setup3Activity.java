@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.itheima62.mobileguard.R;
+import com.itheima62.mobileguard.utils.EncryptTools;
 import com.itheima62.mobileguard.utils.MyConstants;
 import com.itheima62.mobileguard.utils.SpTools;
 
@@ -80,6 +81,8 @@ public class Setup3Activity extends BaseSetupActivity {
 			//不调用父类的功能来进行页面的切换
 			return;
 		} else {
+			//对安全号码加密
+			safeNumber=EncryptTools.encrypt(MyConstants.MUSIC, safeNumber);
 			//保存安全号码
 			SpTools.putString(getApplicationContext(), MyConstants.SAFENUMBER, safeNumber);
 		}

@@ -2,6 +2,7 @@ package com.itheima62.mobileguard.service;
 
 import java.util.List;
 
+import com.itheima62.mobileguard.utils.EncryptTools;
 import com.itheima62.mobileguard.utils.MyConstants;
 import com.itheima62.mobileguard.utils.SpTools;
 
@@ -73,6 +74,9 @@ public class LocationService extends Service {
 				tv_mess.append("speed:" + speed + "\n");
 				//完成发送短信功能
 				String safeNumber=SpTools.getString(LocationService.this, MyConstants.SAFENUMBER,"");
+				//解密安全号码
+				safeNumber=EncryptTools.decryption(MyConstants.MUSIC, safeNumber);
+				
 				//发送短信个安全号码,添加发送权限   android.permission.SEND_SMS
 				SmsManager sm=SmsManager.getDefault();
 				sm.sendTextMessage(safeNumber, "", tv_mess+"", null, null);

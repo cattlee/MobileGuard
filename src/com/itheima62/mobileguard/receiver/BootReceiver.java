@@ -1,5 +1,6 @@
 package com.itheima62.mobileguard.receiver;
 
+import com.itheima62.mobileguard.utils.EncryptTools;
 import com.itheima62.mobileguard.utils.MyConstants;
 import com.itheima62.mobileguard.utils.SpTools;
 
@@ -34,6 +35,8 @@ public class BootReceiver extends BroadcastReceiver {
 			//sim卡发生变化 发送报警短信
 			//取出安全号码,号码肯定有
 			String safeNumber=SpTools.getString(context, MyConstants.SAFENUMBER,"");
+			//解密安全号码
+			safeNumber=EncryptTools.decryption(MyConstants.MUSIC, safeNumber);
 			//发送短信个安全号码,添加发送权限   android.permission.SEND_SMS
 			SmsManager sm=SmsManager.getDefault();
 			sm.sendTextMessage(safeNumber, "", "wo shi xiao tou", null, null);
