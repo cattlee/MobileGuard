@@ -9,17 +9,21 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class LostFindActivity extends Activity {
 
 	private AlertDialog dialog;
+	private LinearLayout ll_botton_menue;
+	private boolean isShowMenue=false;//定义显示menue标记
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +55,7 @@ public class LostFindActivity extends Activity {
 	
 	private void initView() {
 		setContentView(R.layout.activity_lostfind);
-		
+		ll_botton_menue = (LinearLayout) findViewById(R.id.ll_lostfind_menu_bottom);
 	}
 	/*
 	 * 创建菜单的方法
@@ -59,7 +63,7 @@ public class LostFindActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// TODO Auto-generated method stub
-		getMenuInflater().inflate(R.menu.main, menu);
+
 		return true;
 	}
 	
@@ -128,5 +132,21 @@ public class LostFindActivity extends Activity {
 		dialog.show();
 
 	}
-
+	//处理menue键的事件
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode==KeyEvent.KEYCODE_MENU){
+			if (isShowMenue) {
+			//显示菜单
+				ll_botton_menue.setVisibility(View.VISIBLE);
+			}
+			else{
+				//不显示菜单
+				ll_botton_menue.setVisibility(View.GONE);
+			}
+			isShowMenue=!isShowMenue;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 }
+

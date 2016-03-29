@@ -10,5 +10,5 @@ public interface MyConstants {
 	String SAFENUMBER = "safenumber";//安全号码
 	int MUSIC=120;//加密种子
 	String LOSTFIND ="lostfind";//开机是否开启手机防盗
-	String LOSTFINDNAME="lostfindname";
+	String LOSTFINDNAME="lostfindname";//手机防盗名
 }
