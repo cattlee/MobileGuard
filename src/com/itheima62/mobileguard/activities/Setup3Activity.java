@@ -24,8 +24,9 @@ public class Setup3Activity extends BaseSetupActivity {
 	 */
 	@Override
 	public void initData() {
-	
-		et_safeNumber.setText(SpTools.getString(getApplicationContext(), MyConstants.SAFENUMBER, ""));
+		//解密安全号码 并显示出来
+		String safenumber=SpTools.getString(getApplicationContext(), MyConstants.SAFENUMBER, "");
+		et_safeNumber.setText(EncryptTools.decryption(MyConstants.MUSIC, safenumber));
 		super.initData();  
 	}
 
@@ -83,7 +84,7 @@ public class Setup3Activity extends BaseSetupActivity {
 		} else {
 			//对安全号码加密
 			safeNumber=EncryptTools.encrypt(MyConstants.MUSIC, safeNumber);
-			//保存安全号码
+			//保存安全号码   将加密以后的安全号码 以键值对的形式保存在utils  myconstants.java 中 
 			SpTools.putString(getApplicationContext(), MyConstants.SAFENUMBER, safeNumber);
 		}
 		

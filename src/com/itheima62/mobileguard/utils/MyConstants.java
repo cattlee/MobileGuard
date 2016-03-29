@@ -9,5 +9,5 @@ public interface MyConstants {
 	String SIM = "sim";//sim卡信息
 	String SAFENUMBER = "safenumber";//安全号码
 	int MUSIC=120;//加密种子
-
+	String LOSTFIND ="lostfind";//开机是否开启手机防盗
 }

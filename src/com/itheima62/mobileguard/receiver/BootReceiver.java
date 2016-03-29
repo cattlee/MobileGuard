@@ -1,5 +1,6 @@
 package com.itheima62.mobileguard.receiver;
 
+import com.itheima62.mobileguard.service.LostFindService;
 import com.itheima62.mobileguard.utils.EncryptTools;
 import com.itheima62.mobileguard.utils.MyConstants;
 import com.itheima62.mobileguard.utils.SpTools;
@@ -40,6 +41,13 @@ public class BootReceiver extends BroadcastReceiver {
 			//发送短信个安全号码,添加发送权限   android.permission.SEND_SMS
 			SmsManager sm=SmsManager.getDefault();
 			sm.sendTextMessage(safeNumber, "", "wo shi xiao tou", null, null);
+		}
+		//开机启动防盗服务
+		if(SpTools.getBoolean(context, MyConstants.LOSTFIND, false)){
+			//true 开机自动启动防盗服务
+			Intent service =new Intent(context,LostFindService.class);
+			//启动防盗保护的服务
+			context.startService(service);
 		}
 		
 
