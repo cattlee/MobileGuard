@@ -15,7 +15,7 @@ import android.telephony.SmsMessage;
 public class LostFindService extends Service {
 
 	private SmsReceiver receiver;
-	private boolean isPlay;//false éŸ³ä¹æ’­æ”¾çš„æ ‡è®°
+	private boolean isPlay;//false ÒôÀÖ²¥·ÅµÄ±ê¼Ç
 
 	@Override
 	public IBinder onBind(Intent intent) {
@@ -25,14 +25,14 @@ public class LostFindService extends Service {
 	
 	/**
 	 * @author Administrator
-	 * ï¿½ï¿½ï¿½ÅµÄ¹ã²¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * ¶ÌĞÅµÄ¹ã²¥½ÓÊÕÕß
 	 */
 	private class SmsReceiver extends BroadcastReceiver{
 
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			//å®ç°çŸ­ä¿¡æ‹¦æˆª
+			//ÊµÏÖ¶ÌĞÅÀ¹½Ø¹¦ÄÜ
 			Bundle extras = intent.getExtras();
 		    // int i = 3 
 			
@@ -41,44 +41,44 @@ public class LostFindService extends Service {
 			for (Object data:datas){
 				SmsMessage sm = SmsMessage.createFromPdu((byte[]) data);
 				//System.out.println(sm.getMessageBody() + ":" + sm.getOriginatingAddress());
-				String mess = sm.getMessageBody();//è·å–çŸ­ä¿¡å†…å®¹
-				if (mess.equals("#*gps*#")){//è·å– å» å®šä½çš„ä¿¡æ¯
-					//è€—æ—¶çš„å®šä½ï¼ŒæŠŠå®šä½çš„åŠŸèƒ½é˜²ç›—æœåŠ¡ä¸­æ‰§è¡Œ
+				String mess = sm.getMessageBody();//»ñÈ¡¶ÌĞÅÄÚÈİ
+				if (mess.equals("#*gps*#")){//»ñÈ¡È¥¶¨Î»ĞÅÏ¢
+					//ºÄÊ±µÄ¶¨Î»,°Ñ¶¨Î»µÄ¹¦ÄÜ·Åµ½·şÎñÖĞÖ´ĞĞ
 					Intent service = new Intent(context,LocationService.class);
-					startService(service);//å¯åŠ¨å®šä½æœåŠ¡
+					startService(service);//Æô¶¯¶¨Î»µÄ·şÎñ
 					
-					abortBroadcast();//ç»ˆæ­¢å¹¿æ’­
+					abortBroadcast();//ÖÕÖ¹¹ã²¥
 				} else if (mess.equals("#*lockscreen*#")){
-					//è·å–è®¾å¤‡ç®¡ç†å™¨
+					//»ñÈ¡Éè±¸¹ÜÀíÆ÷
 					DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
-					//é‡ç½®é”å±å¯†ç 
+					//ÉèÖÃÃÜÂë
 					dpm.resetPassword("123", 0);
-					//ä¸€é”®é”å±
+					//Ò»¼üËøÆÁ
 					dpm.lockNow();
-					abortBroadcast();//ç»ˆæ­¢å¹¿æ’­
-				} else if (mess.equals("#*wipedata*#")){//è¿œç¨‹æ“¦é™¤ä¿¡æ¯
-					//è·å–è®¾å¤‡ç®¡ç†å™¨
+					abortBroadcast();//ÖÕÖ¹¹ã²¥
+				} else if (mess.equals("#*wipedata*#")){//Ô¶³ÌÇå³ıÊı¾İ
+					//»ñÈ¡Éè±¸¹ÜÀíÆ÷
 					DevicePolicyManager dpm = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
-					//è®¾ç½®å¯†ç 
+					//Çå³ısdÊı¾İ
 					dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
-					abortBroadcast();//ç»ˆæ­¢å¹¿æ’­
+					abortBroadcast();//ÖÕÖ¹¹ã²¥
 				}  else if (mess.equals("#*music*#")){
-					//Ö»åªæ’­æ”¾ä¸€æ¬¡
+					//Ö»²¥·ÅÒ»´Î
 					abortBroadcast();
 					if (isPlay) {
 						return;
 					}
 						
-					//æ’­æ”¾éŸ³ä¹
+					//²¥·ÅÒôÀÖ
 					MediaPlayer mp = MediaPlayer.create(getApplicationContext(), com.itheima62.mobileguard.R.raw.qqqg);
-					//è®¾ç½®éŸ³é‡å€¼æœ€å¤§Öµ
+					//ÉèÖÃ×óÓÒÉùµÀÉùÒôÎª×î´óÖµ
 					mp.setVolume(1, 1);
-					mp.start();//å¼€å§‹æ’­æ”¾
+					mp.start();//¿ªÊ¼²¥·Å
 					mp.setOnCompletionListener(new OnCompletionListener() {
 						
 						@Override
 						public void onCompletion(MediaPlayer mp) {
-							//æ’­æ”¾å®Œæ¯•è§¦å‘æ–¹æ³•
+							//ÒôÀÖ²¥·ÅÍê±Ï£¬´¥·¢´Ë·½·¨
 							isPlay = false;
 						}
 					});;
@@ -92,11 +92,11 @@ public class LostFindService extends Service {
 	
 	@Override
 	public void onCreate() {
-		//çŸ­ä¿¡å¹¿æ’­æ¥æ”¶è€…
+		//¶ÌĞÅ¹ã²¥½ÓÊÕÕß
 		receiver = new SmsReceiver();
 		IntentFilter filter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
-		filter.setPriority(Integer.MAX_VALUE);//çº§åˆ«ä¸€æ ·ï¼Œæ¸…å•æ–‡ä»¶ï¼Œè°å…ˆæ³¨å†Œå…ˆæ‰§è¡Œï¼Œçº§åˆ«ä¸€æ ·ï¼Œä»£ç æ¯”æ¸…å•è¦é«˜
-		//æ³¨å†Œæ‰‹æœºç›‘å¬
+		filter.setPriority(Integer.MAX_VALUE);//¼¶±ğÒ»Ñù£¬Çåµ¥ÎÄ¼ş£¬Ë­ÏÈ×¢²áË­ÏÈÖ´ĞĞ£¬Èç¹û¼¶±ğÒ»Ñù£¬´úÂë±ÈÇåµ¥Òª¸ß
+		//×¢²á¶ÌĞÅ¼àÌı
 		registerReceiver(receiver, filter );
 		super.onCreate();
 	}
@@ -104,7 +104,7 @@ public class LostFindService extends Service {
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
-		//å–æ¶ˆæ³¨å†Œæ‰‹æœºç›‘å¬
+		//È¡Ïû×¢²á¶ÌĞÅµÄ¼àÌı¹ã²¥
 		unregisterReceiver(receiver);
 		super.onDestroy();
 	}

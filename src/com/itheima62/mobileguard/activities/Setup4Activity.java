@@ -61,20 +61,14 @@ public class Setup4Activity extends BaseSetupActivity {
 				// TODO Auto-generated method stub
 				//如果选择打钩，开启防盗保护,防盗保护是一个服务
 				if (isChecked){
-					
-					//如果 复选框 选取  则开启手机防盗服务  参数true
 					SpTools.putBoolean(getApplicationContext(), MyConstants.LOSTFIND, true);
-					
 					System.out.println("check true");
 					//true,开启防盗保护
 					Intent service = new Intent(Setup4Activity.this,LostFindService.class);
 					//启动防盗保护的服务
 					startService(service);
 				} else {
-					
-					//如果 复选框 未选取  则开启手机防盗服务  参数false
 					SpTools.putBoolean(getApplicationContext(), MyConstants.LOSTFIND, false);
-					
 					System.out.println("check false");
 					//关闭防盗保护
 					//true,开启防盗保护

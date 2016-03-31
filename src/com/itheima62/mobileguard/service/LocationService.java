@@ -14,12 +14,13 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-/*
- * å®šä½çš„æœåŠ¡ç®¡ç†å™¨ï¼Œè·å–å®šä½çš„ä¿¡æ¯
- * */
-import android.telephony.gsm.SmsManager;
+import android.telephony.SmsManager;
 
+/**
+ * @author Administrator ¶¨Î»µÄ·şÎñ¹ÜÀíÆ÷,À´»ñÈ¡¶¨Î»µÄĞÅÏ¢
+ */
 public class LocationService extends Service {
+
 	private LocationManager lm;
 	private LocationListener listener;
 
@@ -28,87 +29,87 @@ public class LocationService extends Service {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
 	public void onCreate() {
-		System.out.print("Gps service start !");
 		lm = (LocationManager) getSystemService(LOCATION_SERVICE);
 		listener = new LocationListener() {
-			
+
 			@Override
-			public void onStatusChanged(String provider, int status, Bundle extras) {
+			public void onStatusChanged(String provider, int status,
+					Bundle extras) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onProviderEnabled(String provider) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void onProviderDisabled(String provider) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
-			/* (non-Javadoc)
-			 * ä½ç½®å˜åŒ–å°±è§¦å‘æ­¤æ–¹æ³•è°ƒç”¨  è¦†ç›–æ­¤æ–¹æ³•å¯ä»¥è¿½è¸ªå›è°ƒç»“æœä¿¡æ¯
-			 * @see android.location.LocationListener#onLocationChanged(android.location.Location)
+
+			/*
+			 * (non-Javadoc) Î»ÖÃ±ä»¯£¬¾Í´¥·¢´Ë·½·¨µ÷ÓÃ£¬¸²¸Ç´Ë·½·¨¿ÉÒÔ×·×Ù»Øµ÷½á¹ûĞÅÏ¢
+			 * 
+			 * @see
+			 * android.location.LocationListener#onLocationChanged(android.location
+			 * .Location)
 			 */
 			@Override
 			public void onLocationChanged(Location location) {
-				// è·å–ä½ç½®å˜åŒ–çš„ç»“æœ
-				System.out.print("Gps  changed !");
-				float accuracy = location.getAccuracy();//ç²¾ç¡®åº¦
-				double altitude = location.getAltitude();//  æµ·æ‹”é«˜åº¦
-				double longitude = location.getLongitude();// ç»åº¦  
-				double latitude = location.getLatitude();// çº¬åº¦
-				float speed = location.getSpeed();// é€Ÿåº¦
-				StringBuilder tv_mess=new StringBuilder();
-				
+				// »ñÈ¡Î»ÖÃ±ä»¯µÄ½á¹û
+				float accuracy = location.getAccuracy();// ¾«È·¶È,ÒÔÃ×Îªµ¥Î»
+				double altitude = location.getAltitude();// »ñÈ¡º£°Î¸ß¶È
+				double longitude = location.getLongitude();// »ñÈ¡¾­¶È
+				double latitude = location.getLatitude();// »ñÈ¡Î³¶È
+				float speed = location.getSpeed();// ËÙ¶È
+				//¶¨Î»ĞÅÏ¢
+				StringBuilder tv_mess = new StringBuilder();
 				tv_mess.append("accuracy:" + accuracy + "\n");
 				tv_mess.append("altitude:" + altitude + "\n");
 				tv_mess.append("longitude:" + longitude + "\n");
 				tv_mess.append("latitude:" + latitude + "\n");
 				tv_mess.append("speed:" + speed + "\n");
-				//å®Œæˆå‘é€çŸ­ä¿¡åŠŸèƒ½
-				String safeNumber=SpTools.getString(LocationService.this, MyConstants.SAFENUMBER,"");
-				//è§£å¯†å®‰å…¨å·ç 
-				safeNumber=EncryptTools.decryption(MyConstants.MUSIC, safeNumber);
+				// ·¢ËÍ¶ÌĞÅ
 				
-				//å‘é€çŸ­ä¿¡ä¸ªå®‰å…¨å·ç ,æ·»åŠ å‘é€æƒé™   android.permission.SEND_SMS
-				SmsManager sm=SmsManager.getDefault();
-				sm.sendTextMessage(safeNumber, "", tv_mess+"", null, null);
-				//å…³é—­gps
-				stopSelf();//æœåŠ¡ä¸­  serviceå…³é—­è‡ªå·±
-
+				String safeNumber = SpTools.getString(LocationService.this, MyConstants.SAFENUMBER, "");
+				safeNumber = EncryptTools.decryption(MyConstants.MUSIC, safeNumber);
+				//·¢ËÍ¶ÌĞÅ¸ø°²È«ºÅÂë
+			   SmsManager sm = SmsManager.getDefault();
+			   sm.sendTextMessage(safeNumber, "", tv_mess + "", null, null);
+			
+				// ¹Ø±Õgps
+				stopSelf();//¹Ø±Õ×Ô¼º
 			}
 		};
-		//è·å–æ‰€æœ‰å®šä½æ–¹å¼,ååˆ©ç”¨æœ€ä½³çš„å®šä½æ–¹å¼è¿›è¡Œå®šä½   æ¨¡æ‹Ÿå™¨ä»…æ”¯æŒ  gps å’Œ è¢«åŠ¨ï¼ˆ3gã€4gï¼‰
+		
+		//»ñÈ¡ËùÓĞµÄÌá¹©µÄ¶¨Î»·½Ê½
 		List<String> allProviders = lm.getAllProviders();
 		for (String string : allProviders) {
-			System.out.println(string+"ã€‹ã€‹å®šä½æ–¹å¼");
+			System.out.println(string + "¡·¡·¶¨Î»·½Ê½");
 		}
-		Criteria criteria=new Criteria();
-		criteria.setCostAllowed(true);//äº§ç”Ÿè´¹ç”¨
-		criteria.setAccuracy(Criteria.ACCURACY_FINE);//ç»åº¦
-		//åŠ¨æ€è·å–æ‰‹æœºçš„æœ€ä½³å®šä½æ–¹å¼  CriteriaæŸ¥è¯¢
-		String bestProvider = lm.getBestProvider(criteria, true);
-		/*lm.requestLocationUpdates(provider, minTime, minDistance, listener)  æ³¨å†Œç›‘å¬å›è°ƒ å®Œæˆå®šä½ä¿¡æ¯çš„æ›´æ–°
-		*provider å®šä½æ–¹å¼   gps  wifi  åŸºç«™
-		*minTime å®šä½æ—¶é—´å·®
-		*minDistance å®šä½è·ç¦»å·®
-		*listener å®šä½çš„ç›‘å¬å›è°ƒ
-		*/
+		
+		Criteria criteria = new Criteria();
+		criteria.setCostAllowed(true);//²úÉú·ÑÓÃ
+		criteria.setAccuracy(Criteria.ACCURACY_FINE);
+		//¶¯Ì¬»ñÈ¡ÊÖ»úµÄ×î¼Ñ¶¨Î»·½Ê½
+		String bestProvider = lm.getBestProvider(criteria , true);
+		//×¢²á¼àÌı»Øµ÷
 		lm.requestLocationUpdates(bestProvider, 0, 0, listener);
 		super.onCreate();
 	}
+
 	@Override
 	public void onDestroy() {
-		// å–æ¶ˆå®šä½çš„ç›‘å¬
+		// È¡Ïû¶¨Î»µÄ¼àÌı
 		lm.removeUpdates(listener);
-		lm=null;
+		lm = null;
 		super.onDestroy();
 	}
 

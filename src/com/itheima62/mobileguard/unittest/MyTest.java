@@ -4,14 +4,13 @@ import com.itheima62.mobileguard.engine.ReadContantsEngine;
 import com.itheima62.mobileguard.utils.ServiceUtils;
 
 import android.test.AndroidTestCase;
-//å•å…ƒæµ‹è¯•ç±»
+
 public class MyTest extends AndroidTestCase {
 	public void testReadContants(){
-		ReadContantsEngine.readContants(getContext());//è·å–è™šæ‹Ÿçš„ä¸Šä¸‹æ–‡  getContext()æ–¹æ³•ä¸»è¦ç”¨åœ¨å•å…ƒæµ‹è¯•ä¸­
-		}
+		ReadContantsEngine.readContants(getContext());//»ñÈ¡ĞéÄâµÄÉÏÏÂÎÄ
+	}
 	
 	public void testRunningService(){
 		ServiceUtils.isServiceRunning(getContext(), "");
 	}
 }
-

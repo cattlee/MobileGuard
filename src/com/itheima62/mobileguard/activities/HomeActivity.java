@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
@@ -28,10 +27,6 @@ import com.itheima62.mobileguard.utils.SpTools;
 /**
  * @author Administrator
  * 主界面
- */
-/**
- * @author ltf
- *
  */
 public class HomeActivity extends Activity {
 	private GridView gv_menus;//主界面的按钮

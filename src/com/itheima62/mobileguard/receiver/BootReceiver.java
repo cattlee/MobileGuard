@@ -1,5 +1,6 @@
 package com.itheima62.mobileguard.receiver;
 
+import com.itheima62.mobileguard.activities.Setup4Activity;
 import com.itheima62.mobileguard.service.LostFindService;
 import com.itheima62.mobileguard.utils.EncryptTools;
 import com.itheima62.mobileguard.utils.MyConstants;
@@ -8,50 +9,45 @@ import com.itheima62.mobileguard.utils.SpTools;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
-import android.telephony.gsm.SmsManager;
-import android.telephony.gsm.SmsMessage;
 
-/*
- * å¼€æœºå¯åŠ¨çš„å¹¿æ’­æ¥æ”¶è€…
- * æœ¬å¹¿æ’­æ¥æ”¶è€…é€šè¿‡æ¸…å•æ–‡ä»¶è¿›è¡Œæ³¨å†Œ
- * ç”±äºéœ€è¦åŠ è½½å¹¿æ’­æ¥æ”¶è€…éœ€è¦å¼€æœº  å°±æ‰§è¡Œ  éœ€åŠ è½½æƒé™   android.permission.RECEIVE_BOOT_COMPLETED
- * */
+/**
+ * @author Administrator
+ * ¿ª»úÆô¶¯µÄ¹ã²¥½ÓÊÕÕß
+ *
+ */
 public class BootReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		// æ‰‹æœºå¯åŠ¨å®Œæˆï¼Œæ£€æµ‹simå¡ æ˜¯å¦å˜åŒ–
-		//å–å‡ºä¿å­˜çš„simå¡ä¿¡æ¯  
-		//SpTools.getString(context, MyConstants.SIM, "")ç¬¬äºŒä¸ªå‚æ•°ä¸ºkey  ç¬¬ä¸‰ä¸ªå‚æ•°ä¸ºé»˜è®¤å€¼
-		String oldSim = SpTools.getString(context, MyConstants.SIM, "");
-		//è·å–å½“å‰simå¡ä¿¡æ¯
-		TelephonyManager tm =(TelephonyManager) context.getSystemService(context.TELEPHONY_SERVICE);
-		//getSimSerialNumber()è·å–simå¡åºåˆ—å·
-		String simSerialNumber=tm.getSimSerialNumber();
+		//ÊÖ»úÆô¶¯Íê³É£¬¼ì²âSIM¿¨ÊÇ·ñ±ä»¯
+		//È¡³öÔ­À´±£´æµÄsim¿¨ĞÅÏ¢
+		String oldsim = SpTools.getString(context, MyConstants.SIM, "");
 		
-		//åˆ¤æ–­simå¡æ˜¯å¦å‘ç”Ÿå˜åŒ–
-		//ä¸ºäº†æµ‹è¯• æ•…æ„æ›´æ”¹simå¡ åºåˆ—å·
-		if(!oldSim.equals(simSerialNumber+"2")){
-			//simå¡å‘ç”Ÿå˜åŒ– å‘é€æŠ¥è­¦çŸ­ä¿¡
-			//å–å‡ºå®‰å…¨å·ç ,å·ç è‚¯å®šæœ‰
-			String safeNumber=SpTools.getString(context, MyConstants.SAFENUMBER,"");
-			//è§£å¯†å®‰å…¨å·ç 
-			safeNumber=EncryptTools.decryption(MyConstants.MUSIC, safeNumber);
-			//å‘é€çŸ­ä¿¡ä¸ªå®‰å…¨å·ç ,æ·»åŠ å‘é€æƒé™   android.permission.SEND_SMS
-			SmsManager sm=SmsManager.getDefault();
-			sm.sendTextMessage(safeNumber, "", "wo shi xiao tou", null, null);
+		//»ñÈ¡µ±Ç°ÊÖ»úµÄsim¿¨ĞÅÏ¢
+		TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+		String simSerialNumber = tm.getSimSerialNumber();
+		
+		//ÅĞ¶ÏÊÇ·ñ±ä»¯ + "1"Ö»ÊÇ²âÊÔ´úÂë
+		if (!oldsim.equals(simSerialNumber + "1")){
+			//sim¿¨±ä»¯£¬·¢ËÍ±¨¾¯¶ÌĞÅ
+			//È¡³ö°²È«ºÅÂë,¿Ï¶¨ÓĞµÄ
+			String safeNumber = SpTools.getString(context, MyConstants.SAFENUMBER, "");
+			safeNumber = EncryptTools.decryption(MyConstants.MUSIC, safeNumber);
+			//·¢ËÍ¶ÌĞÅ¸ø°²È«ºÅÂë
+		   SmsManager sm = SmsManager.getDefault();
+		   sm.sendTextMessage(safeNumber, "", "wo shi xiao tou ", null, null);
 		}
-		//å¼€æœºå¯åŠ¨é˜²ç›—æœåŠ¡
-		if(SpTools.getBoolean(context, MyConstants.LOSTFIND, false)){
-			//true å¼€æœºè‡ªåŠ¨å¯åŠ¨é˜²ç›—æœåŠ¡
-			Intent service =new Intent(context,LostFindService.class);
-			//å¯åŠ¨é˜²ç›—ä¿æŠ¤çš„æœåŠ¡
+		
+		//×Ô¶¯Æô¶¯·ÀµÁ·şÎñ
+		
+		if (SpTools.getBoolean(context, MyConstants.LOSTFIND, false)){
+			// true  ¿ª»ú×Ô¶¯Æô¶¯·ÀµÁ·şÎñ
+			Intent service = new Intent(context,LostFindService.class);
+			//Æô¶¯·ÀµÁ±£»¤µÄ·şÎñ
 			context.startService(service);
 		}
-		
-
 	}
-	
 
 }

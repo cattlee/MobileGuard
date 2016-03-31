@@ -5,7 +5,6 @@
         android:fromYDelta="0"
         android:toYDelta="0"
         android:duration="500"></translate>
-    <!-- 设置渐变效果 -->
     <alpha android:fromAlpha="0"
         android:toAlpha="1"
         android:duration="500"></alpha>

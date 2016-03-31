@@ -3,29 +3,29 @@ package com.itheima62.mobileguard.utils;
 public class EncryptTools {
 	/**
 	 * @param seed
-	 *      åŠ å¯†çš„ç§å­
+	 *      ¼ÓÃÜµÄÖÖ×Ó
 	 * @param str
-	 *      è¦åŠ å¯†çš„å­—ç¬¦ä¸²
+	 *      Òª¼ÓÃÜµÄ×Ö·û´®
 	 * @return
 	 */
 	public static String encrypt(int seed,String str){
 		byte[] bytes = str.getBytes();
 		for (int i = 0; i < bytes.length; i++) {
-			bytes[i] ^= seed;//å¯¹å­—èŠ‚åŠ å¯†
+			bytes[i] ^= seed;//¶Ô×Ö½Ú¼ÓÃÜ
 		}
 		return new String(bytes);
 	}
 	
 	/**
 	 * @param seed
-	 *     è§£å¯†çš„ç§å­
+	 *     ½âÃÜµÄÖÖ×Ó
 	 * @param str
 	 * @return
 	 */
 	public static String decryption(int seed,String str){
 		byte[] bytes = str.getBytes();
 		for (int i = 0; i < bytes.length; i++) {
-			bytes[i] ^= seed;//å¯¹å­—èŠ‚åŠ å¯†
+			bytes[i] ^= seed;//¶Ô×Ö½Ú¼ÓÃÜ
 		}
 		return new String(bytes);
 	}

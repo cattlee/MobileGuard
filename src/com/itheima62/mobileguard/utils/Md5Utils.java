@@ -3,24 +3,23 @@ package com.itheima62.mobileguard.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/*å¯¹å­—ç¬¦ä¸²è¿›è¡ŒMD5åŠ å¯†å¤„ç†*/
 public class Md5Utils {
 	public static String md5(String str){
 		StringBuilder mess = new StringBuilder();
 		try {
-			//è·å–MD5åŠ å¯†å™¨
+			//»ñÈ¡MD5¼ÓÃÜÆ÷
 			MessageDigest md = MessageDigest.getInstance("MD5");
 			byte[] bytes = str.getBytes();
 			byte[] digest = md.digest(bytes);
 			
 			for (byte b : digest){
-				//æŠŠæ¯ä¸ªå­—èŠ‚è½¬æˆ16è¿›åˆ¶æ•°  
+				//°ÑÃ¿¸ö×Ö½Ú×ª³É16½øÖÆÊı  
 				int d = b & 0xff;// 0x000000ff
 				String hexString = Integer.toHexString(d);
-				if (hexString.length() == 1) {//å­—èŠ‚çš„é«˜4ä½ä¸º0
+				if (hexString.length() == 1) {//×Ö½ÚµÄ¸ß4Î»Îª0
 					hexString = "0" + hexString;
 				}
-				mess.append(hexString);//æŠŠæ¯ä¸ªå­—èŠ‚å¯¹åº”çš„2ä½åå…­è¿›åˆ¶æ•°å½“æˆå­—ç¬¦ä¸²æ‹¼æ¥ä¸€èµ·
+				mess.append(hexString);//°ÑÃ¿¸ö×Ö½Ú¶ÔÓ¦µÄ2Î»Ê®Áù½øÖÆÊıµ±³É×Ö·û´®Æ´½ÓÒ»Æğ
 				
 			}
 		} catch (NoSuchAlgorithmException e) {

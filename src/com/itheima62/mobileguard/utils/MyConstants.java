@@ -1,14 +1,12 @@
 package com.itheima62.mobileguard.utils;
 
-import android.R.integer;
-
 public interface MyConstants {
-	String SPFILE = "config";//sp çš„é…ç½®æ–‡ä»¶å
-	String PASSWORD="passward";//è®¾ç½®æ‰‹æœºé˜²ç›—çš„å¯†ç 
-	String ISSETUP ="issetup";//æ˜¯å¦è¿›å…¥è¿‡è®¾ç½®å‘å¯¼ç•Œé¢
-	String SIM = "sim";//simå¡ä¿¡æ¯
-	String SAFENUMBER = "safenumber";//å®‰å…¨å·ç 
-	int MUSIC=120;//åŠ å¯†ç§å­
-	String LOSTFIND ="lostfind";//å¼€æœºæ˜¯å¦å¼€å¯æ‰‹æœºé˜²ç›—
-	String LOSTFINDNAME="lostfindname";//æ‰‹æœºé˜²ç›—å
+	String SPFILE = "config";//spµÄÅäÖÃÎÄ¼şÃû×Ö
+	String PASSWORD = "password";//ÊÖ»ú·ÀµÁÃÜÂë
+	String ISSETUP = "issetup";//ÊÇ·ñ½øÈë¹ıÉèÖÃÏòµ¼½çÃæ
+	String SIM = "sim";//sim¿¨ĞÅÏ¢
+	String SAFENUMBER = "safenumber";//°²È«ºÅÂë
+	int MUSIC = 120;//120Ê×ÒôÀÖ
+	String LOSTFIND = "lostfind";//¿ª»úÊÇ·ñ¿ªÆôÊÖ»ú·ÀµÁ
+	String LOSTFINDNAME = "lostfindname";//ÊÖ»ú·ÀµÁÃû
 }

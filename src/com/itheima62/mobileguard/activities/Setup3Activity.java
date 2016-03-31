@@ -24,8 +24,7 @@ public class Setup3Activity extends BaseSetupActivity {
 	 */
 	@Override
 	public void initData() {
-		//解密安全号码 并显示出来
-		String safenumber=SpTools.getString(getApplicationContext(), MyConstants.SAFENUMBER, "");
+		String safenumber = SpTools.getString(getApplicationContext(), MyConstants.SAFENUMBER, "");
 		et_safeNumber.setText(EncryptTools.decryption(MyConstants.MUSIC, safenumber));
 		super.initData();  
 	}
@@ -47,9 +46,8 @@ public class Setup3Activity extends BaseSetupActivity {
 	public void selectSafeNumber(View v){
 		//弹出新的Activity来显示所有好友信息
 		Intent friends = new Intent(this,FriendsActivity.class);
-		//一次性完成  跳转到目标页面 完成目标界面任务后，自动跳转到当前页面
 		startActivityForResult(friends,1);//启动显示好友界面
-		//获取好友数据关闭界面 回到获取联系人界面
+		//
 	}
 	
 	@Override
@@ -70,6 +68,7 @@ public class Setup3Activity extends BaseSetupActivity {
 	 */
 	@Override
 	public void next(View v) {
+		// TODO Auto-generated method stub
 		//保存安全号码
 		
 		//获取安全号码
@@ -83,8 +82,9 @@ public class Setup3Activity extends BaseSetupActivity {
 			return;
 		} else {
 			//对安全号码加密
-			safeNumber=EncryptTools.encrypt(MyConstants.MUSIC, safeNumber);
-			//保存安全号码   将加密以后的安全号码 以键值对的形式保存在utils  myconstants.java 中 
+			safeNumber = EncryptTools.encrypt(MyConstants.MUSIC, safeNumber);
+			System.out.println(safeNumber + "<<<<<<<<<<<<<<");
+			//保存安全号码
 			SpTools.putString(getApplicationContext(), MyConstants.SAFENUMBER, safeNumber);
 		}
 		

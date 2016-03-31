@@ -2,13 +2,14 @@ package com.itheima62.mobileguard.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.ViewDebug.ExportedProperty;
 import android.widget.TextView;
-//自定义类
+
 public class MyTextView extends TextView {
 
 	public MyTextView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		// context上下文 defstyle 样式    attributeset 属性
+		// TODO Auto-generated constructor stub
 	}
 
 	public MyTextView(Context context, AttributeSet attrs) {
@@ -20,8 +21,11 @@ public class MyTextView extends TextView {
 		super(context);
 		// TODO Auto-generated constructor stub
 	}
-	//（category="focus"）  获取焦点
-	public boolean isFocused(){
+	
+	@Override
+	@ExportedProperty(category = "focus")
+	public boolean isFocused() {
+		// TODO Auto-generated method stub
 		return true;
 	}
 

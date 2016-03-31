@@ -37,6 +37,13 @@ public class FriendsActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
+		/**
+		 * ListActivity  直接继承Activity
+		 * 在onCreate方法中
+		 *     ListView lv。。。。
+		 *     setContentView(lv);
+		 */
 		lv_datas = getListView();
 		adapter = new MyAdapter();
 		

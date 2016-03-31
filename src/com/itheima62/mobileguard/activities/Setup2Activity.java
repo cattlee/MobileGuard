@@ -71,15 +71,14 @@ public class Setup2Activity extends BaseSetupActivity {
 				if (TextUtils.isEmpty(SpTools.getString(getApplicationContext(), MyConstants.SIM, ""))){
 					//没有绑定sim卡
 					{
+						
 					///绑定sim的业务
-					//绑定sim卡,存储sim卡信息
+						//绑定sim卡,存储sim卡信息
 						//获取sim卡信息
 						TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 						//sim卡信息
 						String simSerialNumber = tm.getSimSerialNumber();
 						//保存sim卡信息,保存到sp中
-						//public static void putString(Context context,String key,String value){}
-
 						SpTools.putString(getApplicationContext(), MyConstants.SIM, simSerialNumber);                                  
 					}
 					

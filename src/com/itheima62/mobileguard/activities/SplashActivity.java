@@ -8,8 +8,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -47,7 +49,7 @@ public class SplashActivity extends Activity {
 
 	private static final int LOADMAIN = 1;//加载主界面
 	private static final int SHOWUPDATEDIALOG = 2;//显示是否更新的对话框
-	protected static final int ERROR = 3;//错误的统一代号
+	protected static final int ERROR = 3;//错误统一代号
 	private RelativeLayout rl_root;// 界面的根布局组件
 	private int versionCode;// 版本号
 	private String versionName;// 版本名
@@ -65,7 +67,7 @@ public class SplashActivity extends Activity {
 		initData();
 		// 初始化动画
 		initAnimation();
-		// 检查服务器的版本
+		// 检测服务器的版本
 		checkVerion();
 
 	}
@@ -77,7 +79,7 @@ public class SplashActivity extends Activity {
 			PackageInfo packageInfo = pm.getPackageInfo(getPackageName(), 0);
 			// 版本号			
 			versionCode = packageInfo.versionCode;
-			// 版本名			
+			// 版本名		
 			versionName = packageInfo.versionName;
 
 			// 设置textview
@@ -90,26 +92,32 @@ public class SplashActivity extends Activity {
 	private void checkVerion() {
 		// 耗时操作都要放到子线程中执行
 		new Thread(new Runnable() {
+
+			
+
+			
+
 			@Override
 			public void run() {
-				BufferedReader bfr =null;
-				HttpURLConnection conn=null;
-				int errorCode=-1;//错误代码默认为-1   即正常
+				BufferedReader bfr = null;
+				HttpURLConnection conn = null;
+				int errorCode = -1;//正常，没有错误
 				try {
-					startTimeMillis = System.currentTimeMillis();//毫秒显示当前时间
+					startTimeMillis = System.currentTimeMillis();
+					
 					URL url = new URL("http://10.0.2.2:8080/guardversion.json");
+					
 					conn = (HttpURLConnection) url
 							.openConnection();
-					// 读取数据的超时
+					// 读取数据的超时时间
 					conn.setReadTimeout(5000);
 					// 网络连接超时
 					conn.setConnectTimeout(5000);
 					// 设置请求方式
-					conn.setRequestMethod("GET");
+					
 					// 获取相应结果
 					int code = conn.getResponseCode();
-					//返回请求码
-					System.out.println("code");
+					
 					if (code == 200) {// 数据获取成功
 						// 获取读取的字节流
 						InputStream is = conn.getInputStream();
@@ -124,65 +132,63 @@ public class SplashActivity extends Activity {
 							json.append(line);
 							line = bfr.readLine();
 						}
-						//解析json数据，处理JSON异常
-						parseJson = parseJson(json);//返回数据的封装信息
-						
-						
-					}else{
-						errorCode=404;
+						parseJson = parseJson(json);//返回数据封装信息
+	
+					} else {
+						errorCode = 404;
 					}
-				} catch (MalformedURLException e) {//异常提示4002json文件位置错误（没找到JSON文件）
+				} catch (MalformedURLException e) {//4002
+					errorCode = 4002;
 					e.printStackTrace();
-					errorCode=4002;
-				} catch (IOException e) {//异常提示4001网络连接错误
+				} catch (IOException e) {// 4001
+					// TODO Auto-generated catch block
+					//
+					errorCode = 4001;
 					e.printStackTrace();
-					errorCode=4001;
 				} catch (JSONException e) {
-					// 4003  JSON格式异常
+					// TODO Auto-generated catch block
+					errorCode = 4003;
 					e.printStackTrace();
-					errorCode=4003;
-				}finally{
-/*					
-*				 if(errorCode==-1){
-*						isNewVersion(parseJson);
-*					}else{
-*						Message msg =Message.obtain();
-*						msg.what=ERROR;
-*						msg.arg1=errorCode;
-*						handler.sendMessage(msg);//发送错误提示信息
-*					}
-*/
-					Message msg=Message.obtain();
-					if(errorCode==-1){
-						msg.what=isNewVersion(parseJson);//檢測是否有新版本
-					}else{
-						msg.what=ERROR;
-      					msg.arg1=errorCode;	
+				} finally {
+					/*if (errorCode == -1){
+						isNewVersion(parseJson);// 是否有新版本
+					} else {
+						Message msg = Message.obtain();
+						msg.what = ERROR;
+						msg.arg1 = errorCode;
+						handler.sendMessage(msg);//发送错误信息
+					}*/
+					Message msg = Message.obtain();
+					if (errorCode == -1){
+						msg.what = isNewVersion(parseJson);//检测是否有新版本
+					} else {
+						msg.what = ERROR;
+						msg.arg1 = errorCode;
 					}
 					long endTime = System.currentTimeMillis();
 					if (endTime - startTimeMillis < 3000){
-						SystemClock.sleep(3000 - (endTime - startTimeMillis));//不超过3秒，补足3秒
+						SystemClock.sleep(3000 - (endTime - startTimeMillis));//时间不超过3秒，补足3秒
 					}
 					handler.sendMessage(msg);//发送消息
 					try {
-						//断开连接 释放资源
-						if(bfr==null||conn==null){
-							return;
+						//关闭连接资源
+						if (bfr != null ){
+							bfr.close();
 						}
-						bfr.close();
-						conn.disconnect();
+						if (conn != null){
+							conn.disconnect();
+						}
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+					
 				}
+
 			}
 		}).start();
 	}
 	
-	/*
-	 * Handler主要接受子线程发送的数据， 并用此数据配合主线程更新UI。
-	 * */
 	private Handler handler = new Handler(){
 		public void handleMessage(android.os.Message msg) {
 			//处理消息
@@ -191,19 +197,16 @@ public class SplashActivity extends Activity {
 				loadMain();
 				break;
 			case ERROR://有异常
-				switch(msg.arg1){
+				switch (msg.arg1) {
 				case 404://资源找不到
-					Toast.makeText(getApplicationContext(), "404资源找不到", 0).show();
+				    Toast.makeText(getApplicationContext(), "404资源找不到", 0).show();
 					break;
 				case 4001://找不到网络
-					Toast.makeText(getApplicationContext(), "4001找不到网络", 0).show();
+					Toast.makeText(getApplicationContext(), "4001没有网络", 0).show();
 					break;
-				case 4002://URL格式错误
-					Toast.makeText(getApplicationContext(), "4002URl格式错误", 0).show();
+				case 4003://json格式错误
+					Toast.makeText(getApplicationContext(), "4003json格式错误", 0).show();
 					break;
-				case 4003://JSON格式错误
-					Toast.makeText(getApplicationContext(), "4003JSON格式错误", 0).show();
-				break;
 				default:
 					break;
 				}
@@ -211,8 +214,7 @@ public class SplashActivity extends Activity {
 				break;
 			case SHOWUPDATEDIALOG://显示更新版本的对话框
 				showUpdateDialog();
-				break;
-			
+				break; 
 			default:
 				break;
 			}
@@ -227,42 +229,44 @@ public class SplashActivity extends Activity {
 		finish();//关闭自己
 	};
 	/**
-	 * 在子线程中执行，不可做ui操作，故由handler传输数据
+	 * 在子线程中执行
 	 * @param parseJson
 	 */
 	protected int isNewVersion(UrlBean parseJson) {
 		int serverCode = parseJson.getVersionCode();// 获取服务器的版本
-
+		
 		if (serverCode == versionCode){//版本一致
-			
-//			//进入主界面
-//			Message msg = Message.obtain();//获取msg  或者通过new 获取
-//			msg.what = LOADMAIN;
-//			handler.sendMessage(msg);
 			return LOADMAIN;
+			/*//进入主界面
+			Message msg = Message.obtain();
+			msg.what = LOADMAIN;
+			handler.sendMessage(msg);*/
 		} else {//有新版本  
-
 			return SHOWUPDATEDIALOG;
 		}
 	}
-	
+
+
+
 	/**
 	 * 显示是否更新新版本的对话框
 	 */
 	protected void showUpdateDialog() {
+		// TODO Auto-generated method stub
 		//对话框的上下文 是Activity的class,AlertDialog是Activity的一部分
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		//让用户禁用取消操作(防止用户取消退出更新对话框出现bug)处理方法1
+		//让用户禁用取消操作
 		//builder.setCancelable(false);
-		//处理方法2 设置用户取消事件
-		builder.setOnCancelListener(new OnCancelListener(){
-		
+		builder.setOnCancelListener(new OnCancelListener() {
+			
 			@Override
 			public void onCancel(DialogInterface dialog) {
-				// 有对话框时，用户取消，事件处理——》 进入主界面
+				//取消的事件处理
+				//进入主界面
 				loadMain();
 			}
-		})     .setTitle("提醒")
+		})
+			   .setTitle("提醒")
 		       .setMessage("是否更新新版本？新版本的具有如下特性：" + parseJson.getDesc())
 		       .setPositiveButton("更新", new OnClickListener() {
 				
@@ -285,27 +289,32 @@ public class SplashActivity extends Activity {
 			});
 		builder.show();//显示对话框
 	}
+
 	/**
-	 * 新版本的下载安装 利用xutil工具类
+	 * 新版本的下载安装
 	 */
 	protected void downLoadNewApk() {
-		HttpUtils utils = new HttpUtils();//，httputils封装了子线程，获取了回调结果，故不需要再设置线程再设置handler处理消息
+		HttpUtils utils = new HttpUtils();
 		//parseJson.getUrl() 下载的url
-		// target  apk下载到的位置（本地路径）第三个参数 回调结果
+		// target  本地路径
 		System.out.println(parseJson.getUrl());
+		//先删除掉xx.apk
+		File file = new File("/mnt/sdcard/xx.apk");
+		file.delete();//删除文件
 		utils.download(parseJson.getUrl(), "/mnt/sdcard/xx.apk", new RequestCallBack<File>() {
 			
-			@Override//total 总进度  current 当前进度
+			@Override
 			public void onLoading(long total, long current, boolean isUploading) {
 				// TODO Auto-generated method stub
-				pb_download.setVisibility(View.VISIBLE);//设置进度条显示
+				pb_download.setVisibility(View.VISIBLE);//设置进度的显示
 				pb_download.setMax((int) total);//设置进度条的最大值
-				pb_download.setProgress((int) current);//设置当前进度				
+				pb_download.setProgress((int) current);//设置当前进度
 				super.onLoading(total, current, isUploading);
 			}
 
 			@Override
 			public void onSuccess(ResponseInfo<File> arg0) {
+				// TODO Auto-generated method stub
 				//下载成功
 				//在主线程中执行
 				Toast.makeText(getApplicationContext(), "下载新版本成功", 1).show();
@@ -316,14 +325,17 @@ public class SplashActivity extends Activity {
 			
 			@Override
 			public void onFailure(HttpException arg0, String arg1) {
+				// TODO Auto-generated method stub
 				//下载失败
 				Toast.makeText(getApplicationContext(), "下载新版本失败", 1).show();
+				pb_download.setVisibility(View.GONE);//隐藏进度条
 			}
 		});
 	}
-/*
- * 安装的新版本
- * */
+
+	/**
+	 * 安装下载的新版本
+	 */
 	protected void installApk() {
 		/*<intent-filter>
         <action android:name="android.intent.action.VIEW" />
@@ -338,33 +350,38 @@ public class SplashActivity extends Activity {
 		Uri data = Uri.fromFile(new File("/mnt/sdcard/xx.apk"));
 		intent.setDataAndType(data , type);
 		startActivityForResult(intent,0);
-
+		
+		
 	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
 		//如果用户取消更新apk，那么直接进入主界面
 		loadMain();
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
-
 	/**
 	 * @param jsonString
-	 *            url的json数据,throws JSONException 则谁调用该方法 谁处理异常
+	 *            url的json数据
 	 * @return url信息封装对象
+	 * @throws JSONException 
 	 */
-	protected UrlBean parseJson(StringBuilder jsonString) throws JSONException{
+	protected UrlBean parseJson(StringBuilder jsonString) throws JSONException {
 		UrlBean bean = new UrlBean();
 		JSONObject jsonObj;
-			// {"version":"2","url":"http://10.0.2.2:8080/xxx.apk","desc":"增加了防病毒功能"}
-			jsonObj = new JSONObject(jsonString + "");
-			int versionCode = jsonObj.getInt("version");
-			String url = jsonObj.getString("url");
-			String desc = jsonObj.getString("desc");
-			// 封装结果数据
-			bean.setDesc(desc);
-			bean.setUrl(url);
-			bean.setVersionCode(versionCode);
+		
+		// {"version":"2","url":"http://10.0.2.2:8080/xxx.apk","desc":"增加了防病毒功能"}
+		jsonObj = new JSONObject(jsonString + "");
+		int versionCode = jsonObj.getInt("version");
+		String url = jsonObj.getString("url");
+		String desc = jsonObj.getString("desc");
+		// 封装结果数据
+		bean.setDesc(desc);
+		bean.setUrl(url);
+		bean.setVersionCode(versionCode);
+		
 
 		return bean;
 	}
@@ -386,18 +403,20 @@ public class SplashActivity extends Activity {
 		// showAlpha();
 		// Alpha动画0.0完全透明
 		AlphaAnimation aa = new AlphaAnimation(0.0f, 1.0f);
-		// 设置动画播放的时间毫秒为3000?
+		// 设置动画播放的时间 毫秒为单位
 		aa.setDuration(3000);
-		// 界面停留在动画结束状态 
+		// 界面停留在动画结束状态
 		aa.setFillAfter(true);
+
 		RotateAnimation rotate = new RotateAnimation(0, 360,
 				// 设置锚点
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
 				0.5f);
 		// 显示时间
 		rotate.setDuration(3000);
-		// 界面停留在结束状 
+		// 界面停留在结束状态
 		rotate.setFillAfter(true);
+
 		ScaleAnimation sa = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f,
 				// 设置锚点
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
@@ -406,8 +425,10 @@ public class SplashActivity extends Activity {
 		sa.setDuration(3000);
 		// 界面停留在结束状态
 		sa.setFillAfter(true);
+
 		// 创建动画
 		AnimationSet as = new AnimationSet(true);
+
 		as.addAnimation(sa);
 		as.addAnimation(rotate);
 		as.addAnimation(aa);
@@ -422,11 +443,11 @@ public class SplashActivity extends Activity {
 	private void showAlpha() {
 		// Alpha动画0.0完全透明
 		AlphaAnimation aa = new AlphaAnimation(0.0f, 1.0f);
-		// 设置动画播放的时间3000毫秒
+		// 设置动画播放的时间毫秒为单位
 		aa.setDuration(3000);
 		// 界面停留在动画结束状态
 		aa.setFillAfter(true);
-		// 给组件设置动画
+		// 给组件设置动态
 		rl_root.startAnimation(aa);
 	}
 

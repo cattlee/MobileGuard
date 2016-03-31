@@ -11,11 +11,11 @@ import android.net.Uri;
 
 /**
  * @author Administrator
- * è¯»å–æ‰‹æœºè”ç³»äººçš„åŠŸèƒ½ç±»
+ * ¶ÁÈ¡ÊÖ»úÁªÏµÈËµÄ¹¦ÄÜÀà
  */
 public class ReadContantsEngine {
 	/**
-	 * è¯»å–æ‰‹æœºè”ç³»äºº
+	 * ¶ÁÈ¡ÊÖ»úÁªÏµÈË
 	 */
 	public static List<ContantBean> readContants(Context context){
 		List<ContantBean> datas = new ArrayList<ContantBean>();
@@ -23,33 +23,31 @@ public class ReadContantsEngine {
 		Uri uriDatas = Uri.parse("content://com.android.contacts/data");
 		
 		Cursor cursor = context.getContentResolver().query(uriContants, new String[]{"_id"}, null, null, null);
-		//å¾ªç¯å–æ•°æ® 
+		//Ñ­»·È¡Êı¾İ 
 		while(cursor.moveToNext()){
-			//å¥½å‹ä¿¡æ¯çš„å°è£…bean
+			//ºÃÓÑĞÅÏ¢µÄ·â×°bean
 			ContantBean bean = new ContantBean();
-			//ç›´æ¥æ‰“å°id
-			String id = cursor.getString(0);//è·å–åˆ°è”ç³»äººçš„id
-			//cursor æ¸¸æ ‡
+			//Ö±½Ó´òÓ¡id
+			String id = cursor.getString(0);//»ñÈ¡µ½ÁªÏµÈËµÄid
+			
 			Cursor cursor2 = context.getContentResolver().query(uriDatas,new String[]{"data1","mimetype"}, " raw_contact_id = ? ", new String[]{id}, null);
 			
-			//å¾ªç¯æ¯æ¡æ•°æ®ä¿¡æ¯éƒ½æ˜¯ä¸€ä¸ªå¥½å‹çš„ä¸€éƒ¨åˆ†ä¿¡æ¯
+			//Ñ­»·Ã¿ÌõÊı¾İĞÅÏ¢¶¼ÊÇÒ»¸öºÃÓÑµÄÒ»²¿·ÖĞÅÏ¢
 			while(cursor2.moveToNext()) {
-				//è·å¾—ç¬¬0åˆ—æ•°æ®
 				String data  = cursor2.getString(0);
-				//è·å–åˆ—å
 				String mimeType = cursor2.getString(1);
 				
 
 				if (mimeType.equals("vnd.android.cursor.item/name")) {
-					System.out.println("ç¬¬" +id + "ä¸ªç”¨æˆ·ï¼šåå­—ï¼š" + data);
+					System.out.println("µÚ" +id + "¸öÓÃ»§£ºÃû×Ö£º" + data);
 					bean.setName(data);
 				} else if (mimeType.equals("vnd.android.cursor.item/phone_v2")) {
-					System.out.println("ç¬¬" +id + "ä¸ªç”¨æˆ·ï¼šç”µè¯ï¼š" + data);
+					System.out.println("µÚ" +id + "¸öÓÃ»§£ºµç»°£º" + data);
 					bean.setPhone(data);
 				}
 			}
-			cursor2.close();//å…³é—­æ¸¸æ ‡é‡Šæ”¾æ•°æ®åº“æœåŠ¡å™¨èµ„æº
-			datas.add(bean);//åŠ ä¸€æ¡å¥½å‹ä¿¡æ¯
+			cursor2.close();//¹Ø±ÕÓÎ±êÊÍ·Å×ÊÔ´
+			datas.add(bean);//¼ÓÒ»ÌõºÃÓÑĞÅÏ¢
 		}
 		cursor.close();
 		return datas;

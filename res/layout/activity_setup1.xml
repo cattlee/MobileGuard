@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:drawableLeft="@android:drawable/btn_star_big_on"     
+        android:drawableLeft="@android:drawable/btn_star_big_on"
         android:gravity="center_vertical"
         android:text="Sim卡变更报警"
         android:textSize="18sp" />

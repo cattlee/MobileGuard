@@ -2,41 +2,40 @@ package com.itheima62.mobileguard.utils;
 
 import java.util.List;
 
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 
+/**
+ * @author Administrator
+ * ÅĞ¶Ï·şÎñµÄ×´Ì¬
+ */
 public class ServiceUtils {
-/*
- *åˆ¤æ–­æœåŠ¡çš„çŠ¶æ€
- * @parm servicename 
- * serviceå®Œæ•´çš„åŒ…å+ç±»å
- * @return
- * è¯¥service  æ˜¯å¦è¿è¡Œ
- * */
-	
-	public static Boolean isServiceRunning(Context context,String serviceName){
-		boolean isRunning=false;
+	/**
+	 * @param context
+	 * @param serviceName
+	 *       serviceÍêÕûµÄÃû×Ö °üÃû+ÀàÃû
+	 * @return
+	 *     ¸ÃservcieÊÇ·ñÔÚÔËĞĞ
+	 */
+	public static boolean isServiceRunning(Context context,String serviceName){
+		boolean isRunning = false;
 		
-		//åˆ¤æ–­è¿è¡Œä¸­çš„æœåŠ¡çŠ¶æ€ï¼Œéœ€è¦ActivityManader
-		ActivityManager am =(ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-		//è·å–androidæ‰‹æœºä¸­è¿è¡Œçš„æ‰€æœ‰æœåŠ¡
+		//ÅĞ¶ÏÔËĞĞÖĞµÄ·şÎñ×´Ì¬£¬ActivityManager
+		ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+		//»ñÈ¡androidÊÖ»úÖĞÔËĞĞµÄËùÓĞ·şÎñ
 		List<RunningServiceInfo> runningServices = am.getRunningServices(50);
 		
 		for (RunningServiceInfo runningServiceInfo : runningServices) {
 			//System.out.println(runningServiceInfo.service.getClassName());
-			//åˆ¤æ–­æœåŠ¡çš„åå­—æ˜¯å¦åŒ…å«æˆ‘ä»¬æŒ‡å®šçš„æœåŠ¡å
+			//ÅĞ¶Ï·şÎñµÄÃû×ÖÊÇ·ñ°üº¬ÎÒÃÇÖ¸¶¨µÄ·şÎñÃû
 			if (runningServiceInfo.service.getClassName().equals(serviceName)){
-				//åå­—ä¸€ç›´ï¼Œè¯¥æœåŠ¡åœ¨è¿è¡Œä¸­ 
+				//Ãû×ÖÒ»Ö±£¬¸Ã·şÎñÔÚÔËĞĞÖĞ 
 				isRunning = true;
-				//å·²ç»æ‰¾åˆ° é€€å‡ºå¾ªç¯
+				//ÒÑ¾­ÕÒµ½ ÍË³öÑ­»·
 				break;
 			}
 		}
-
 		return isRunning;
-		
 	}
-
 }
