@@ -2,12 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1100ff00"
     android:orientation="vertical" >
     
 	<TextView style="@style/tv_title"
+	    android:background="#00ff00"
 	    android:textColor="#000000"
 	    android:text="修改手机防盗名"/>
-	<EditText  android:layout_width="fill_parent"
+	
+	<EditText 
+	    android:background="#33f0ff"
+	    android:layout_width="fill_parent"
 	    android:inputType="textPassword"
 	    android:layout_height="wrap_content"
 	    android:textColor="#000000"

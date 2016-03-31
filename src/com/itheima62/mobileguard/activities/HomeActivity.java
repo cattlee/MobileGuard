@@ -29,6 +29,10 @@ import com.itheima62.mobileguard.utils.SpTools;
  * @author Administrator
  * 主界面
  */
+/**
+ * @author ltf
+ *
+ */
 public class HomeActivity extends Activity {
 	private GridView gv_menus;//主界面的按钮
 	
