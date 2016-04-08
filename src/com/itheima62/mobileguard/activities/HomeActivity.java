@@ -61,6 +61,13 @@ public class HomeActivity extends Activity {
 					int position, long id) {
 				//判断点击位置
 				switch (position) {
+				case 1://通讯卫士
+				{
+					//打开设置通讯卫士的界面
+					Intent setting = new Intent(HomeActivity.this,TelSmsSafeActivity.class);
+					startActivity(setting);
+					break;
+				}
 				case 8: //设置中心
 					//打开设置中心的界面
 					Intent setting = new Intent(HomeActivity.this,SettingCenterActivity.class);
