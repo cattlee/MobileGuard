@@ -15,6 +15,29 @@ public final class R {
         public static final int prev_out=0x7f040003;
     }
     public static final class attr {
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int content=0x7f010001;
+        /** 
+             Defines whether a child is limited to draw inside of its bounds or not.
+             This is useful with animations that scale the size of the children to more
+             than 100% for instance. In such a case, this property should be set to false
+             to allow the children to draw outside of their bounds. The default value of
+             this property is true.
+        
+         <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int title=0x7f010000;
     }
     public static final class color {
         public static final int lightblue=0x7f070000;
@@ -23,9 +46,8 @@ public final class R {
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
 
-         Example customization of dimensions originally defined in res/values/dimens.xml
-         (such as screen margins) for screens with more than 820dp of available width. This
-         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
     
          */
         public static final int activity_horizontal_margin=0x7f080000;
@@ -41,55 +63,93 @@ public final class R {
         public static final int btn_green_pressed=0x7f020006;
         public static final int callmsgsafe=0x7f020007;
         public static final int gv_list_selector=0x7f020008;
-        public static final int ic_launcher=0x7f020009;
-        public static final int item_gv_selector_app=0x7f02000a;
-        public static final int lock=0x7f02000b;
-        public static final int luncher_bg=0x7f02000c;
-        public static final int netmanager=0x7f02000d;
-        public static final int phone=0x7f02000e;
-        public static final int safe=0x7f02000f;
-        public static final int settings=0x7f020010;
-        public static final int setup1=0x7f020011;
-        public static final int sysoptimize=0x7f020012;
-        public static final int taskmanager=0x7f020013;
-        public static final int trojan=0x7f020014;
-        public static final int unlock=0x7f020015;
+        public static final int ic_delete_btn=0x7f020009;
+        public static final int ic_delete_btn_focused=0x7f02000a;
+        public static final int ic_launcher=0x7f02000b;
+        public static final int item_gv_selector_app=0x7f02000c;
+        public static final int iv_delete_selector=0x7f02000d;
+        public static final int list_devider=0x7f02000e;
+        public static final int lock=0x7f02000f;
+        public static final int luncher_bg=0x7f020010;
+        public static final int netmanager=0x7f020011;
+        public static final int phone=0x7f020012;
+        public static final int safe=0x7f020013;
+        public static final int settings=0x7f020014;
+        public static final int setup1=0x7f020015;
+        public static final int sysoptimize=0x7f020016;
+        public static final int taskmanager=0x7f020017;
+        public static final int trojan=0x7f020018;
+        public static final int unlock=0x7f020019;
     }
     public static final class id {
-        public static final int action_settings=0x7f0c0013;
-        public static final int bt_dialog_enter_password_cancel=0x7f0c000a;
-        public static final int bt_dialog_enter_password_login=0x7f0c0009;
-        public static final int bt_dialog_setting_password_cancel=0x7f0c000e;
-        public static final int bt_dialog_setting_password_setpass=0x7f0c000d;
-        public static final int bt_setup2_bindsim=0x7f0c0004;
-        public static final int cb_setup4_isprotected=0x7f0c0007;
-        public static final int et_dialog_enter_password_passone=0x7f0c0008;
-        public static final int et_dialog_setting_password_passone=0x7f0c000b;
-        public static final int et_dialog_setting_password_passtwo=0x7f0c000c;
-        public static final int et_setup3_safenumber=0x7f0c0006;
+        public static final int bt_dialog_enter_password_cancel=0x7f0c0018;
+        public static final int bt_dialog_enter_password_login=0x7f0c0017;
+        public static final int bt_dialog_lostfind_cancel=0x7f0c001b;
+        public static final int bt_dialog_lostfind_modify=0x7f0c001a;
+        public static final int bt_dialog_setting_password_cancel=0x7f0c001f;
+        public static final int bt_dialog_setting_password_setpass=0x7f0c001e;
+        public static final int bt_setup2_bindsim=0x7f0c0007;
+        public static final int bt_telsms_addsafenumber=0x7f0c000b;
+        public static final int bt_telsmssafe_add=0x7f0c0014;
+        public static final int bt_telsmssafe_cancel=0x7f0c0015;
+        public static final int cb_settingcenter_autoupdate_checked=0x7f0c0026;
+        public static final int cb_setup4_isprotected=0x7f0c000a;
+        public static final int cb_telsmssafe_phonemode=0x7f0c0013;
+        public static final int cb_telsmssafe_smsmode=0x7f0c0012;
+        public static final int et_dialog_enter_password_passone=0x7f0c0016;
+        public static final int et_dialog_lostfind_modify_name=0x7f0c0019;
+        public static final int et_dialog_setting_password_passone=0x7f0c001c;
+        public static final int et_dialog_setting_password_passtwo=0x7f0c001d;
+        public static final int et_setup3_safenumber=0x7f0c0009;
+        public static final int et_telsms_gotopage=0x7f0c000f;
+        public static final int et_telsmssafe_blacknumber=0x7f0c0011;
         public static final int gv_home_menus=0x7f0c0000;
-        public static final int iv_item_home_gv_icon=0x7f0c0011;
-        public static final int iv_setup2_isbind=0x7f0c0005;
-        public static final int pb_splash_download_progress=0x7f0c0003;
-        public static final int rl_splash_root=0x7f0c0001;
-        public static final int tv_friends_item_name=0x7f0c000f;
-        public static final int tv_friends_item_phone=0x7f0c0010;
-        public static final int tv_item_home_gv_name=0x7f0c0012;
-        public static final int tv_splash_version_name=0x7f0c0002;
+        public static final int iv_item_home_gv_icon=0x7f0c0022;
+        public static final int iv_setup2_isbind=0x7f0c0008;
+        public static final int iv_telsmssafe_listview_item_delete=0x7f0c0029;
+        public static final int ll_lostfind_menu_bottom=0x7f0c0002;
+        public static final int lv_telsms_safenumbers=0x7f0c000c;
+        public static final int mn_modify_name=0x7f0c002e;
+        public static final int mn_test_menu=0x7f0c002f;
+        public static final int pb_splash_download_progress=0x7f0c0005;
+        public static final int pb_telsms_loading=0x7f0c000e;
+        public static final int rl_lostfind_root=0x7f0c0001;
+        public static final int rl_splash_root=0x7f0c0003;
+        public static final int sciv_setting_center_autoupdate=0x7f0c0006;
+        public static final int tv_friends_item_name=0x7f0c0020;
+        public static final int tv_friends_item_phone=0x7f0c0021;
+        public static final int tv_item_home_gv_name=0x7f0c0023;
+        public static final int tv_popup_black_contacts=0x7f0c002b;
+        public static final int tv_popup_black_phonelog=0x7f0c002c;
+        public static final int tv_popup_black_shoudong=0x7f0c002a;
+        public static final int tv_popup_black_smslog=0x7f0c002d;
+        public static final int tv_settingcenter_autoupdate_content=0x7f0c0025;
+        public static final int tv_settingcenter_autoupdate_title=0x7f0c0024;
+        public static final int tv_splash_version_name=0x7f0c0004;
+        public static final int tv_telsms_nodata=0x7f0c000d;
+        public static final int tv_telsms_totalpages=0x7f0c0010;
+        public static final int tv_telsmssafe_listview_item_mode=0x7f0c0028;
+        public static final int tv_telsmssafe_listview_item_number=0x7f0c0027;
     }
     public static final class layout {
         public static final int activity_home=0x7f030000;
         public static final int activity_lostfind=0x7f030001;
         public static final int activity_main=0x7f030002;
-        public static final int activity_setup1=0x7f030003;
-        public static final int activity_setup2=0x7f030004;
-        public static final int activity_setup3=0x7f030005;
-        public static final int activity_setup4=0x7f030006;
-        public static final int activity_splash=0x7f030007;
-        public static final int dialog_enter_password=0x7f030008;
-        public static final int dialog_setting_password=0x7f030009;
-        public static final int item_friend_listview=0x7f03000a;
-        public static final int item_home_gridview=0x7f03000b;
+        public static final int activity_settingcenter=0x7f030003;
+        public static final int activity_setup1=0x7f030004;
+        public static final int activity_setup2=0x7f030005;
+        public static final int activity_setup3=0x7f030006;
+        public static final int activity_setup4=0x7f030007;
+        public static final int activity_telsmssafe=0x7f030008;
+        public static final int dialog_addblacknumber=0x7f030009;
+        public static final int dialog_enter_password=0x7f03000a;
+        public static final int dialog_modify_name=0x7f03000b;
+        public static final int dialog_setting_password=0x7f03000c;
+        public static final int item_friend_listview=0x7f03000d;
+        public static final int item_home_gridview=0x7f03000e;
+        public static final int item_settingcenter_view=0x7f03000f;
+        public static final int item_telsmssafe_listview=0x7f030010;
+        public static final int popup_blacknumber_item=0x7f030011;
     }
     public static final class menu {
         public static final int main=0x7f0b0000;
@@ -98,10 +158,10 @@ public final class R {
         public static final int qqqg=0x7f060000;
     }
     public static final class string {
-        public static final int action_settings=0x7f090002;
+        public static final int action_settings=0x7f090001;
         public static final int activity_sample_device_admin=0x7f090003;
         public static final int app_name=0x7f090000;
-        public static final int hello_world=0x7f090001;
+        public static final int hello_world=0x7f090002;
         public static final int sample_device_admin=0x7f090004;
         public static final int sample_device_admin_description=0x7f090005;
     }
@@ -136,4 +196,58 @@ public final class R {
     public static final class xml {
         public static final int device_admin_sample=0x7f050000;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a SettingCenterItemView.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SettingCenterItemView_content com.itheima62.mobileguard:content}</code></td><td></td></tr>
+           <tr><td><code>{@link #SettingCenterItemView_title com.itheima62.mobileguard:title}</code></td><td>
+             Defines whether a child is limited to draw inside of its bounds or not.</td></tr>
+           </table>
+           @see #SettingCenterItemView_content
+           @see #SettingCenterItemView_title
+         */
+        public static final int[] SettingCenterItemView = {
+            0x7f010000, 0x7f010001
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.itheima62.mobileguard.R.attr#content}
+          attribute's value can be found in the {@link #SettingCenterItemView} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.itheima62.mobileguard:content
+        */
+        public static final int SettingCenterItemView_content = 1;
+        /**
+          <p>
+          @attr description
+          
+             Defines whether a child is limited to draw inside of its bounds or not.
+             This is useful with animations that scale the size of the children to more
+             than 100% for instance. In such a case, this property should be set to false
+             to allow the children to draw outside of their bounds. The default value of
+             this property is true.
+        
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name com.itheima62.mobileguard:title
+        */
+        public static final int SettingCenterItemView_title = 0;
+    };
 }
